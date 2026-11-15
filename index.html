@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>東京・富士山深度自由行 2027</title>
+  <meta name="theme-color" content="#FFFDF8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="東京富士山">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="icon" type="image/png" href="./icon-192.png">
+  <script>(function(){if(typeof Element!=='undefined'&&Element.prototype.attachShadow){const o=Element.prototype.attachShadow;Element.prototype.attachShadow=function(i){return o.call(this,Object.assign({},i,{mode:'open'}));};}})();</script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: {
+          ink: '#2D3142',
+          vermilion: '#FF6B6B',
+          paper: '#FFFDF8',
+          cream: '#FFF6EC',
+          line: '#F0E4D7'
+        },
+        fontFamily: {
+          sans: ['"Noto Sans TC"', '"Zen Maru Gothic"', '"Microsoft JhengHei"', '"PingFang TC"', 'system-ui', 'sans-serif'],
+          serif: ['"Noto Sans TC"', '"Zen Maru Gothic"', '"Microsoft JhengHei"', 'sans-serif']
+        }
+      } }
+    };
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root { --safe-b: env(safe-area-inset-bottom, 0px); }
+    body {
+      padding-top: env(safe-area-inset-top, 0px);
+      -webkit-tap-highlight-color: transparent;
+      background-color: #FFFDF8;
+      background-image: radial-gradient(#F3E5D8 1.2px, transparent 1.2px);
+      background-size: 22px 22px;
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .main-pad { padding-bottom: calc(7rem + var(--safe-b)); }
+    .nav-safe { padding-bottom: var(--safe-b); }
+    .tap { min-height: 46px; }
+    :focus-visible { outline: 3px solid #FF6B6B; outline-offset: 2px; }
+    .detail-body[hidden], .fold-panel[hidden] { display: none; }
+    .paper-card {
+      background: #FFFFFF;
+      border: 2px solid #F0E4D7;
+      box-shadow: 0 6px 18px -4px rgba(210, 175, 145, 0.18);
+    }
+    /* 隱藏 Netlify Drop 等第三方自動注入的浮動徽章（白名單以外的頂層節點一律隱藏） */
+    html > *:not(head):not(body),
+    body > *:not(header):not(nav):not(main):not(#hotelFab):not(#driverModal):not(#phraseModal):not(#toast):not(script):not(style),
+    a[href*="netlify" i],
+    [id*="netlify" i],
+    [class*="netlify" i],
+    iframe[src*="netlify" i] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+      position: fixed !important;
+      left: -9999px !important;
+    }
+  </style>
+</head>
+<body class="bg-paper text-ink min-h-screen font-sans text-base md:text-lg">
+
+  <!-- 頂部標題（手機版精簡重點） -->
+  <header class="sticky top-0 md:static z-40 bg-paper/95 backdrop-blur border-b-2 border-line">
+    <div class="max-w-3xl mx-auto px-4 md:px-6 pt-2.5 md:pt-4 pb-2 md:pb-3 flex items-center justify-between gap-3">
+      <div>
+        <p class="hidden md:inline-flex items-center gap-1.5 text-xs md:text-sm tracking-[0.18em] text-vermilion font-black bg-rose-50 border border-rose-200 px-3 py-0.5 rounded-full">🌸 TOKYO × FUJI 2027</p>
+        <h1 class="text-xl md:text-3xl font-black leading-tight text-ink md:mt-1">東京・富士山自由行</h1>
+        <p class="hidden md:block text-xs md:text-base font-bold text-slate-500 mt-0.5">2027/01/29 – 02/03 ・ 6 天 5 夜家庭之旅</p>
+      </div>
+      <div class="flex flex-col items-end gap-1.5 shrink-0">
+        <span id="netBadge" class="text-xs md:text-sm font-extrabold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700">線上</span>
+        <button id="installAppBtn" type="button" class="px-3 py-1.5 rounded-full bg-cream border-2 border-line hover:border-vermilion text-ink text-xs md:text-sm font-extrabold flex items-center gap-1 shadow-sm">📲 安裝 App</button>
+      </div>
+    </div>
+    <div class="hidden md:block max-w-3xl mx-auto px-4 md:px-6 pb-2.5 md:pb-3">
+      <div class="flex items-center justify-between rounded-2xl bg-cream border-2 border-line text-ink px-3 py-1.5 md:px-4 md:py-2.5 text-sm md:text-lg shadow-sm">
+        <span id="countdownText" class="font-extrabold flex items-center gap-1.5 truncate">🎒 計算中…</span>
+        <button id="jumpTodayBtn" type="button" class="tap shrink-0 px-3.5 md:px-4 rounded-xl bg-vermilion text-white font-extrabold text-sm md:text-base shadow-sm">看今日</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 導航列：手機版固定於底部，平板／電腦版固定於頂部橫向 -->
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-paper/95 backdrop-blur border-t-2 border-line nav-safe md:sticky md:top-0 md:bottom-auto md:border-t-0 md:border-b-2 md:shadow-sm" aria-label="主選單">
+    <div class="max-w-3xl mx-auto grid grid-cols-4 gap-1.5 px-2.5 py-1.5 md:px-6 md:py-2">
+      <button type="button" class="navBtn tap py-2 md:py-2.5 rounded-2xl flex flex-col md:flex-row items-center justify-center md:gap-2 text-sm md:text-base font-extrabold transition-all" data-tab="tab-itinerary"><span class="text-xl leading-none">📅</span>行程</button>
+      <button type="button" class="navBtn tap py-2 md:py-2.5 rounded-2xl flex flex-col md:flex-row items-center justify-center md:gap-2 text-sm md:text-base font-extrabold transition-all" data-tab="tab-money"><span class="text-xl leading-none">💰</span>匯率/分帳</button>
+      <button type="button" class="navBtn tap py-2 md:py-2.5 rounded-2xl flex flex-col md:flex-row items-center justify-center md:gap-2 text-sm md:text-base font-extrabold transition-all" data-tab="tab-vouchers"><span class="text-xl leading-none">🧳</span>清單/憑證</button>
+      <button type="button" class="navBtn tap py-2 md:py-2.5 rounded-2xl flex flex-col md:flex-row items-center justify-center md:gap-2 text-sm md:text-base font-extrabold transition-all" data-tab="tab-sos"><span class="text-xl leading-none">🗣️</span>日語/SOS</button>
+    </div>
+  </nav>
+
+  <main class="max-w-3xl mx-auto main-pad">
+
+    <!-- 分頁 1：行程（手機版預設只看重點，詳細敘述採摺疊展開） -->
+    <section id="tab-itinerary" class="tab-page px-4 md:px-6 pt-4 md:pt-5 space-y-4 md:space-y-5" aria-label="行程">
+      <div id="daySelector" class="grid grid-cols-3 gap-2 md:grid-cols-6" role="tablist"></div>
+      <p class="md:hidden text-center text-xs font-bold text-slate-400 -mt-1">👆 點擊天數，或向右滑看下一天（第 1–6 天）</p>
+
+      <div class="flex items-center justify-between gap-2.5 pt-1">
+        <h2 id="dayTitle" class="font-black text-lg md:text-2xl text-ink leading-snug"></h2>
+        <button id="toggleAllBtn" type="button" class="tap shrink-0 px-3.5 md:px-4 rounded-2xl border-2 border-line bg-white text-xs md:text-base font-extrabold flex items-center gap-1.5 shadow-sm">
+          <i data-lucide="chevrons-up-down" class="w-4 h-4"></i><span id="toggleAllLabel">全部展開</span>
+        </button>
+      </div>
+
+      <!-- 當日重點路線膠囊卡（手機版收進下方「天氣與票券詳情」，讓第一屏直接看到行程大字卡） -->
+      <div class="hidden md:block rounded-2xl bg-cream/85 border-2 border-line px-4 py-3">
+        <p class="text-xs md:text-sm font-black text-vermilion mb-1">📌 本日重點路線（點擊下方景點卡可展開詳細敘述）</p>
+        <p id="dayHighlight" class="text-sm md:text-lg font-extrabold text-ink leading-relaxed"></p>
+      </div>
+
+      <!-- 每日即時天氣・穿搭・票券・末班車（手機版精簡為單條天氣列，詳情收合） -->
+      <div class="paper-card rounded-3xl overflow-hidden">
+        <div class="px-3.5 py-2.5 md:px-6 md:py-3.5 bg-white border-b-2 border-line flex items-center justify-between gap-2">
+          <div id="liveWeatherBar" class="min-w-0 flex-1">
+            <p class="font-black text-sm md:text-base text-ink truncate">🌤️ 即時天氣載入中…</p>
+            <p id="weatherStatus" class="text-xs md:text-sm font-bold text-slate-500 mt-0.5 truncate">自動連線氣象資料</p>
+          </div>
+          <button id="refreshWeatherBtn" type="button" class="tap shrink-0 px-3 py-1.5 md:px-3.5 md:py-2 rounded-2xl border-2 border-line bg-cream hover:bg-rose-50 text-xs md:text-sm font-extrabold text-vermilion flex items-center gap-1 shadow-sm">🔄 天氣</button>
+        </div>
+        <button id="daySummaryBtn" type="button" class="tap w-full px-3.5 py-2.5 md:px-6 md:py-4 flex items-center justify-between gap-2 text-left bg-cream/60 hover:bg-cream transition-colors" aria-expanded="false">
+          <span class="font-black text-sm md:text-lg text-ink">📌 重點路線・🌤️ 穿搭・🎫 票券</span>
+          <span id="daySummaryBadge" class="shrink-0 text-xs md:text-sm font-extrabold px-3 py-1 rounded-full bg-white border border-line text-vermilion">▾ 展開</span>
+        </button>
+        <div id="daySummary" class="fold-panel px-4 pb-4 pt-3.5 md:px-6 md:pb-6 space-y-4 text-base md:text-lg border-t-2 border-dashed border-line"></div>
+      </div>
+
+      <ol id="timeline" class="relative md:border-l-4 md:border-vermilion/40 md:ml-4 md:pl-7 space-y-3 md:space-y-5"></ol>
+    </section>
+
+    <!-- 分頁 2：匯率/分帳 -->
+    <section id="tab-money" class="tab-page hidden px-4 md:px-6 pt-5 space-y-5" aria-label="匯率與分帳">
+      <div class="paper-card rounded-3xl p-5 md:p-6 space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <h2 class="font-black text-xl md:text-2xl text-ink">💱 匯率換算</h2>
+            <p id="rateStatus" class="text-sm font-medium text-slate-500 mt-1">預設匯率（可自動更新或手動修改）</p>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <label class="text-sm md:text-base font-bold text-slate-600 flex items-center gap-1.5">1 JPY =
+              <input id="rateInput" type="number" step="0.0001" min="0" inputmode="decimal" class="w-24 px-2.5 py-1.5 rounded-xl border-2 border-line bg-cream text-center font-mono text-base font-bold">TWD
+            </label>
+            <button id="fetchRateBtn" type="button" class="tap px-3.5 rounded-2xl border-2 border-line bg-cream text-sm font-extrabold flex items-center gap-1">🔄 即時匯率</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <label class="text-sm md:text-base font-extrabold text-slate-600">🇯🇵 日圓 JPY ¥
+            <input id="jpyInput" type="number" inputmode="decimal" min="0" class="mt-1.5 w-full tap px-4 rounded-2xl border-2 border-line bg-cream/60 text-2xl font-mono font-black">
+          </label>
+          <label class="text-sm md:text-base font-extrabold text-slate-600">🇹🇼 新台幣 TWD NT$
+            <input id="twdInput" type="number" inputmode="decimal" min="0" class="mt-1.5 w-full tap px-4 rounded-2xl border-2 border-line bg-cream/60 text-2xl font-mono font-black">
+          </label>
+        </div>
+        <div class="flex flex-wrap gap-2" id="quickAmounts"></div>
+      </div>
+
+      <div class="paper-card rounded-3xl p-5 md:p-6 space-y-4">
+        <h2 class="font-black text-xl md:text-2xl text-ink">🧾 旅費記帳・均分</h2>
+        <form id="expenseForm" class="grid grid-cols-6 gap-2.5">
+          <input id="expTitle" required maxlength="40" placeholder="項目（如：敘敘苑午餐）" class="col-span-6 tap px-4 rounded-2xl border-2 border-line bg-cream/50 text-base md:text-lg font-medium">
+          <input id="expAmount" required type="number" min="1" inputmode="numeric" placeholder="金額 JPY" class="col-span-3 tap px-4 rounded-2xl border-2 border-line bg-cream/50 text-base md:text-lg font-mono font-bold">
+          <select id="expPayer" class="col-span-3 tap px-3 rounded-2xl border-2 border-line bg-cream/50 text-base md:text-lg font-bold"></select>
+          <button type="submit" class="col-span-6 tap rounded-2xl bg-vermilion text-white font-extrabold text-base md:text-lg shadow-sm">＋ 新增一筆</button>
+        </form>
+        <div id="expenseSummary" class="grid grid-cols-2 gap-3 text-base"></div>
+        <div id="settleBox" class="text-base space-y-2"></div>
+        <ul id="expenseList" class="space-y-2.5"></ul>
+        <div class="grid grid-cols-3 gap-2.5 pt-3 border-t-2 border-line">
+          <button id="exportBtn" type="button" class="tap rounded-2xl border-2 border-line bg-cream text-sm md:text-base font-extrabold">複製分享碼</button>
+          <button id="importBtn" type="button" class="tap rounded-2xl border-2 border-line bg-cream text-sm md:text-base font-extrabold">貼上同步</button>
+          <button id="clearExpBtn" type="button" class="tap rounded-2xl border-2 border-rose-200 bg-rose-50 text-rose-600 text-sm md:text-base font-extrabold">清空帳目</button>
+        </div>
+        <div id="importPanel" class="hidden space-y-2.5">
+          <textarea id="importText" rows="4" placeholder="貼上旅伴的分享碼（Base64 或 JSON）" class="w-full p-3.5 rounded-2xl border-2 border-line bg-cream/50 text-sm md:text-base font-mono"></textarea>
+          <button id="importApplyBtn" type="button" class="tap w-full rounded-2xl bg-ink text-white font-extrabold text-base">套用同步</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 分頁 3：清單/憑證（詳細備註與各分類細項支援摺疊） -->
+    <section id="tab-vouchers" class="tab-page hidden px-4 md:px-6 pt-5 space-y-5" aria-label="清單與憑證">
+      <div class="space-y-1">
+        <h2 class="font-black text-xl md:text-2xl text-ink">🎟️ 預約憑證・票券</h2>
+        <p class="text-sm md:text-base font-medium text-slate-500">重點編號與電話可直接填寫；詳細注意事項可點擊展開。</p>
+      </div>
+      <div id="voucherList" class="space-y-4"></div>
+
+      <div class="paper-card rounded-3xl p-4 md:p-6 space-y-4">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <div>
+            <h2 class="font-black text-xl md:text-2xl text-ink">🧳 行前待辦・行李清單</h2>
+            <p class="text-xs md:text-sm font-bold text-slate-500 mt-0.5">點擊各分類標題可展開／摺疊細項</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="packPct" class="text-base md:text-lg font-mono font-black text-vermilion">0%</span>
+            <button id="toggleAllPackBtn" type="button" class="tap px-3.5 rounded-2xl border-2 border-line bg-cream text-xs md:text-sm font-extrabold">全部展開</button>
+          </div>
+        </div>
+        <div class="h-3 rounded-full bg-cream border border-line overflow-hidden"><div id="packBar" class="h-full bg-vermilion transition-all" style="width:0%"></div></div>
+        <div id="packList" class="space-y-3"></div>
+        <button id="exportPackBtn" type="button" class="tap w-full rounded-2xl border-2 border-line bg-cream text-sm md:text-base font-extrabold">複製清單進度分享碼</button>
+      </div>
+    </section>
+
+    <!-- 分頁 4：旅行日語小卡 ＆ 緊急資訊 -->
+    <section id="tab-sos" class="tab-page hidden px-4 md:px-6 pt-5 space-y-5" aria-label="日語小卡與緊急資訊">
+      <!-- 旅行・購物・餐廳・交通實用日語手指小卡 -->
+      <div id="phraseSectionCard" class="paper-card rounded-3xl overflow-hidden">
+        <div class="px-4 py-3.5 md:px-6 md:py-4 bg-cream/70 border-b-2 border-line flex items-center justify-between gap-2">
+          <div class="min-w-0">
+            <h2 class="font-black text-lg md:text-2xl text-ink">🗣️ 旅行實用日語小卡</h2>
+            <p class="text-xs md:text-sm font-bold text-slate-500 mt-0.5">點左側文字或「🔍 放大」出示給店員看；點「🔊 發音」直接朗讀</p>
+          </div>
+          <span id="phraseCountBadge" class="shrink-0 text-xs md:text-sm font-extrabold px-3 py-1 rounded-full bg-white border border-line text-vermilion">🍽️ 餐廳 (8)</span>
+        </div>
+        <div id="phraseWrap" class="p-3.5 md:p-6 space-y-3.5">
+          <div id="phraseCatTabs" class="grid grid-cols-5 gap-1.5 md:gap-2.5" role="tablist" aria-label="日語小卡分類"></div>
+          <div id="phraseList" class="space-y-2.5"></div>
+        </div>
+      </div>
+
+      <div class="rounded-3xl bg-rose-50 border-2 border-rose-200 p-5 md:p-6 space-y-3.5 shadow-sm">
+        <h2 class="font-black text-xl md:text-2xl text-rose-700">🚨 日本緊急電話（一鍵撥號）</h2>
+        <div class="grid grid-cols-2 gap-3.5">
+          <a href="tel:110" class="tap rounded-2xl bg-white border-2 border-rose-200 flex flex-col items-center justify-center py-4 font-black text-rose-600"><span class="text-3xl font-mono">110</span><span class="text-sm mt-1">警察局</span></a>
+          <a href="tel:119" class="tap rounded-2xl bg-white border-2 border-rose-200 flex flex-col items-center justify-center py-4 font-black text-rose-600"><span class="text-3xl font-mono">119</span><span class="text-sm mt-1">救護車・消防</span></a>
+        </div>
+        <a href="tel:+81-50-3816-2787" class="tap rounded-2xl bg-white border-2 border-rose-200 flex items-center justify-center text-sm md:text-base font-extrabold px-3 text-center">📞 JNTO 訪日旅客熱線（多語・24H） +81-50-3816-2787</a>
+      </div>
+
+      <div class="paper-card rounded-3xl p-5 md:p-6 space-y-3.5 text-base">
+        <h2 class="font-black text-xl md:text-2xl text-ink">🇹🇼 駐日代表處（台北駐日經濟文化代表處）</h2>
+        <p class="text-sm md:text-base font-medium text-slate-600">📍 東京都港区白金台 5-20-2</p>
+        <div class="grid grid-cols-1 gap-2.5">
+          <a href="tel:+81-3-3280-7811" class="tap rounded-2xl bg-ink text-white font-extrabold text-sm md:text-base flex items-center justify-center">總機 +81-3-3280-7811</a>
+          <a href="tel:+81-80-1009-7179" class="tap rounded-2xl bg-vermilion text-white font-extrabold text-sm md:text-base flex items-center justify-center">東京辦事處 24H 急難救助 +81-80-1009-7179</a>
+          <a href="tel:+886-800-085-095" class="tap rounded-2xl border-2 border-line bg-cream font-extrabold text-sm md:text-base flex items-center justify-center">外交部旅外國人急難救助全球專線 +886-800-085-095</a>
+        </div>
+        <p class="text-sm text-slate-500">電話出發前請至外交部領務局網站再次核對。</p>
+      </div>
+
+      <div class="paper-card rounded-3xl p-5 md:p-6 space-y-3.5 text-base">
+        <h2 class="font-black text-xl md:text-2xl text-ink">🛡️ 保險緊急聯絡（自行填寫）</h2>
+        <label class="block text-sm md:text-base font-extrabold text-slate-600">保險公司 / 保單號碼
+          <input id="insName" maxlength="60" class="mt-1.5 w-full tap px-4 rounded-2xl border-2 border-line bg-cream/50 text-base md:text-lg" placeholder="例：○○產險 保單 123456">
+        </label>
+        <label class="block text-sm md:text-base font-extrabold text-slate-600">24H 海外理賠專線
+          <input id="insPhone" inputmode="tel" maxlength="30" class="mt-1.5 w-full tap px-4 rounded-2xl border-2 border-line bg-cream/50 text-base md:text-lg font-mono" placeholder="+886-...">
+        </label>
+        <a id="insCall" href="#" class="tap rounded-2xl bg-emerald-600 text-white font-extrabold text-sm md:text-base flex items-center justify-center opacity-50 pointer-events-none">撥打保險專線</a>
+      </div>
+
+      <!-- 護照遺失處理（可摺疊詳情） -->
+      <div class="paper-card rounded-3xl overflow-hidden text-base leading-relaxed">
+        <button type="button" class="sosToggle tap w-full px-5 py-4 flex items-center justify-between gap-2 text-left bg-cream/50 hover:bg-cream" data-target="passportWrap" aria-expanded="false">
+          <h2 class="font-black text-ink text-lg md:text-2xl">🪪 護照遺失處理 SOP</h2>
+          <span class="sosBadge shrink-0 text-xs md:text-sm font-extrabold px-3 py-1 rounded-full bg-white border border-line text-vermilion">▾ 展開步驟</span>
+        </button>
+        <div id="passportWrap" class="fold-panel p-5 md:p-6 border-t-2 border-dashed border-line">
+          <ol class="list-decimal list-inside space-y-2 text-slate-700 font-medium">
+            <li>至最近交番（派出所）申請「遺失證明書」。</li>
+            <li>備妥護照影本、2 吋照片與身分證件。</li>
+            <li>聯繫駐日代表處申請補發護照或入國證明書。</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 回飯店 FAB -->
+  <a id="hotelFab" href="#" target="_blank" rel="noopener noreferrer" class="fixed right-4 z-30 tap px-5 rounded-full bg-vermilion text-white shadow-xl flex items-center gap-2 font-black text-sm md:text-base bottom-[calc(5.5rem+env(safe-area-inset-bottom))] md:bottom-6 md:right-6">
+    <i data-lucide="hotel" class="w-5 h-5"></i>回飯店
+  </a>
+
+  <!-- 全螢幕司機卡 -->
+  <div id="driverModal" class="fixed inset-0 z-50 hidden bg-paper overflow-y-auto font-sans" role="dialog" aria-modal="true" aria-label="司機卡">
+    <div class="max-w-xl md:max-w-2xl mx-auto min-h-full px-5 py-6 flex flex-col gap-5">
+      <div class="flex items-center justify-between">
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-100 text-amber-900 font-black text-sm md:text-base">🚕 司機問路卡（Driver Card）</span>
+        <button id="driverClose" type="button" aria-label="關閉" class="w-12 h-12 rounded-full bg-white border-2 border-line text-2xl font-black leading-none shadow-sm">×</button>
+      </div>
+      <div class="paper-card rounded-3xl p-5 md:p-6 text-center space-y-2">
+        <p id="drvPoliteJa" class="text-2xl md:text-3xl font-black text-ink leading-relaxed">すみません、<br>ここへ行ってください。</p>
+        <p class="text-base md:text-lg font-bold text-slate-500">不好意思，請載我到這裡。</p>
+      </div>
+      <div class="paper-card rounded-3xl p-6 md:p-8 text-center border-2 border-vermilion space-y-3">
+        <p id="drvJa" class="font-sans font-black text-3xl md:text-5xl leading-snug tracking-wide text-ink break-words"></p>
+        <p id="drvZh" class="font-sans font-extrabold text-xl md:text-2xl text-vermilion"></p>
+        <hr class="border-t-2 border-dashed border-line my-2">
+        <p id="drvAddr" class="font-sans text-2xl md:text-3xl font-extrabold leading-relaxed break-words text-ink"></p>
+      </div>
+      <div class="mt-auto grid gap-3">
+        <button id="drvSpeak" type="button" class="tap py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-ink font-black text-lg md:text-xl shadow-sm flex items-center justify-center gap-2">🔊 播放語音（給司機聽）</button>
+        <div class="grid grid-cols-2 gap-3">
+          <button id="drvCopy" type="button" class="tap rounded-2xl border-2 border-line bg-white font-extrabold text-base md:text-lg">📋 複製地址</button>
+          <a id="drvNav" href="#" target="_blank" rel="noopener noreferrer" class="tap rounded-2xl bg-vermilion text-white font-extrabold text-base md:text-lg flex items-center justify-center">🚗 Google 導航</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 全螢幕日語手指會話卡（放大給店員／服務人員看） -->
+  <div id="phraseModal" class="fixed inset-0 z-50 hidden bg-paper overflow-y-auto font-sans" role="dialog" aria-modal="true" aria-label="日語會話放大卡">
+    <div class="max-w-xl md:max-w-2xl mx-auto min-h-full px-5 py-6 flex flex-col gap-5">
+      <div class="flex items-center justify-between">
+        <span id="phrModalBadge" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-rose-50 border border-rose-200 text-vermilion font-black text-sm md:text-base">🗣️ 日語手指小卡</span>
+        <button id="phrModalClose" type="button" aria-label="關閉" class="w-12 h-12 rounded-full bg-white border-2 border-line text-2xl font-black leading-none shadow-sm">×</button>
+      </div>
+      <div class="paper-card rounded-3xl p-4 md:p-5 text-center space-y-1 bg-cream/60">
+        <p class="text-lg md:text-xl font-black text-slate-700">すみません、これを見てください。</p>
+        <p class="text-xs md:text-sm font-bold text-slate-500">不好意思，請看這張說明卡。</p>
+      </div>
+      <div class="paper-card rounded-3xl p-6 md:p-8 text-center border-2 border-vermilion space-y-4">
+        <p id="phrModalTag" class="inline-block text-xs md:text-sm font-extrabold px-3 py-1 rounded-full bg-cream border border-line text-ink"></p>
+        <p id="phrModalJa" class="font-sans font-black text-3xl md:text-5xl leading-snug tracking-wide text-ink break-words"></p>
+        <p id="phrModalRo" class="font-mono text-sm md:text-base font-bold text-slate-500 leading-relaxed"></p>
+        <hr class="border-t-2 border-dashed border-line my-2">
+        <p id="phrModalZh" class="font-sans font-extrabold text-xl md:text-2xl text-vermilion leading-relaxed"></p>
+      </div>
+      <div class="mt-auto grid gap-3">
+        <button id="phrModalSpeak" type="button" class="tap py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-ink font-black text-lg md:text-xl shadow-sm flex items-center justify-center gap-2">🔊 播放日語發音（給店員聽）</button>
+        <div class="grid grid-cols-2 gap-3">
+          <button id="phrModalCopy" type="button" class="tap rounded-2xl border-2 border-line bg-white font-extrabold text-base md:text-lg">📋 複製日文</button>
+          <button id="phrModalDone" type="button" class="tap rounded-2xl bg-ink text-white font-extrabold text-base md:text-lg">✓ 完成關閉</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="toast" class="fixed left-1/2 -translate-x-1/2 z-[60] px-5 py-2.5 rounded-full bg-ink text-white text-sm md:text-base font-extrabold opacity-0 pointer-events-none transition-opacity shadow-lg" style="top:calc(env(safe-area-inset-top,0px) + 14px)" role="status"></div>
+
+  <script>
+  /* =====================================================================
+     資料層：所有行程內容集中於 ITINERARY_DATA，日後只需修改此處
+     欄位：time 時間 / title 名稱 / ja 當地名稱 / addr 當地地址 / cat 類別
+           hours 營業時間 / cost 費用 / transport 交通 / notes 重點清單
+           photo 拍照建議 / q 地圖搜尋字串 / web 官方網站(可省略→搜尋頁)
+           options 現場多選一餐廳 [{name, detail, q}]
+     ===================================================================== */
+  const HOTEL = { name: 'KOKO HOTEL Residence Tokyo Oshiage', ja: 'KOKO HOTEL Residence 東京押上', addr: '東京都墨田区押上1丁目40-11', q: 'KOKO HOTEL Residence Tokyo Oshiage', web: 'https://www.koko-hotels.com/tokyo_oshiage/', phone: '03-5608-8560' };
+  const SOLAMACHI_ADDR = '東京都墨田区押上1-1-2 東京スカイツリータウン・ソラマチ';
+
+  const ITINERARY_DATA = [
+    {
+      day: 1, date: '2027-01-29', weekday: '五',
+      title: '啟程出發、專車直達押上基地、暖心晚餐',
+      highlight: '親家M3 出發 ➔ 桃園機場起飛 ➔ 成田接機直達押上 ➔ 晴空街道人氣美食 ➔ LIFE 旗艦超市大採買',
+      weather: '東京約 3–11°C，抵達時已入夜，體感偏冷。建議洋蔥式穿搭＋防風外套，機上先備好圍巾手套。（出發前請查最新預報）',
+      pass: '本日接機直達，市區僅步行。',
+      lastTrain: '全程專車與步行，無末班車壓力。LIFE 營業至 24:00。',
+      items: [
+        { time: '07:15–09:00 (TST)', title: '親家M3 ➔ 台灣桃園國際機場 (TPE)', cat: '交通', cost: '約 NT$ 1,800', transport: '接送專車 / 自駕', hours: '-', q: 'Taiwan Taoyuan International Airport',
+          notes: ['專車到府協助上件，車程約 1 小時 45 分，清晨車流順暢、避開國道尖峰，預計 09:00 抵達第一航廈。'], photo: '在專車行李廂前拍全員「整裝出發」合照。', ja: '台灣桃園國際機場', addr: '桃園市大園區航站南路9號', web: 'https://www.taoyuan-airport.com/' },
+        { time: '09:00–12:35 (TST)', title: '台灣桃園國際機場 (TPE) 報到出境 ＆ 候機', cat: '機場', cost: '-', transport: '航廈步行', hours: '航班 12:35 起飛', q: 'Taiwan Taoyuan International Airport',
+          notes: ['提早 3.5 小時抵達，從容辦理託運、安檢、自動通關，隨身僅留薄外套與證件。'], photo: '在航廈航班看板前手持 4 本護照特寫，候機室以客機為背景合影。', ja: '台灣桃園國際機場', addr: '桃園市大園區航站南路9號', web: 'https://www.taoyuan-airport.com/' },
+        { time: '12:35–16:35', title: '航程飛行：TPE ➔ NRT（成田機場）', cat: '機場', cost: '機票已結清', transport: '國際航班客機（飛行約 3 小時）', hours: '-', q: 'Narita International Airport', ja: '成田国際空港', addr: '千葉県成田市古込1-1', web: 'https://www.narita-airport.jp/',
+          notes: ['時差提醒：抵達日本時間為 16:35 JST（日本快台灣 1 小時）。'] },
+        { time: '16:35–17:50 (JST)', title: '成田國際機場 (NRT) 入境審查、提領行李 ＆ 會合', cat: '機場', cost: '-', transport: '航廈入境大廳', hours: '-', q: 'Narita International Airport',
+          notes: ['時間合理化：保留充足 75 分鐘供下機、VJW 掃碼通關、行李轉盤提領與上洗手間，再前往接機大廳會合。'], photo: '迎賓大廳「Welcome to Japan」拍抵達紀念照。', ja: '成田国際空港', addr: '千葉県成田市古込1-1', web: 'https://www.narita-airport.jp/' },
+        { time: '17:50–19:10', title: '成田 ➔ KOKO HOTEL 押上', cat: '交通', cost: '依接機訂單已付', transport: '專屬預約接機服務（東關東道、首都高，約 80 分）', hours: '全天預約制', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr, web: HOTEL.web,
+          notes: ['時間合理化：週五傍晚進市區車流量較大，預留 80 分鐘車程直達飯店大門，免搬行李擠電車。', '司機舉牌接機並協助裝箱，專車直達飯店門口，免去進出車站換乘之苦。'], photo: '接近市區時在高速公路上抓拍窗外點燈的東京夜景與晴空塔。' },
+        { time: '19:10–19:40', title: 'KOKO HOTEL Residence Tokyo Oshiage 辦理入住', cat: '住宿', cost: '住宿已結清', transport: '專車直達門口', hours: '入住 15:00–22:00', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr, web: HOTEL.web,
+          notes: ['大行李箱定位，換上羽絨外套與輕便便服出門。'], photo: '在飯店寬敞的公寓式大客廳與廚房前拍開箱生活照。' },
+        { time: '19:45–20:55', title: '【晚餐】晴空街道人氣美食（現場 3 選 1）', cat: '美食', cost: '約 3,500–6,800 JPY（控制在 8,000 內）', transport: '步行 5 分（室內直達商場）', hours: '各店至 22:00/23:00', q: 'Tokyo Solamachi', ja: '東京ソラマチ', addr: SOLAMACHI_ADDR, web: 'https://www.tokyo-solamachi.jp/',
+          options: [
+            { name: '首選 A：六厘舍 沾麵（Solamachi 6F）', detail: 'Tabelog 3.56。必吃濃厚魚介沾麵配熱高湯驅寒（全家約 5,000 JPY）。', q: '六厘舍 東京スカイツリータウン・ソラマチ店' },
+            { name: '首選 B：銀座天龍 煎餃（Solamachi 6F）', detail: 'Tabelog 3.50。必吃 15cm 巨無霸爆汁煎餃配炒飯（全家約 6,500 JPY）。', q: '銀座天龍 東京スカイツリータウン・ソラマチ店' },
+            { name: '首選 C：宮武讚岐烏龍麵（Solamachi 3F）', detail: 'Tabelog 3.35。必吃柴魚清湯烏龍配現炸天婦羅（全家約 3,800 JPY）。', q: '宮武讃岐うどん 東京スカイツリータウン・ソラマチ店' }
+          ], notes: ['現場依全家胃口 3 選 1，吃完無縫順路採買 LIFE 超市。', '季節限定活動：晴空街道正值「冬之草莓祭（Strawberry Fair）」，商場甜點櫃位推出產地直送草莓芭菲與甜點，可買回房享用！'], photo: '2x 模式俯拍熱騰騰沾麵或爆汁煎餃特寫。' },
+        { time: '21:00–21:45', title: 'LIFE 超市 押上站前店', cat: '購物', cost: '採買約 3,000 JPY', transport: '步行 3 分（飯店對面）', hours: 'B1F/1F 營業至 24:00', q: 'ライフ 押上駅前店', ja: 'ライフ 押上駅前店', addr: '東京都墨田区押上1丁目10-3', web: 'https://www.lifecorp.jp/',
+          notes: [
+            '必買：當季日本草莓、特選純濃鮮乳、明日包車零食點心與優格。',
+            '購物提示：超市生鮮食品（水果、鮮奶、麵包）適用日本 8% 輕減稅率；日本大型超市多已導入自助結帳機，支援信用卡與交通 IC 卡感應支付；採買完建議裝入自備購物袋，步行約 150 公尺即可直接送回房間冰箱放妥。'
+          ], photo: '在整齊壯觀的草莓水果冰櫃前拍小朋友抱著大草莓的可愛照片。' },
+        { time: '21:50', title: '返回飯店客廳休息', cat: '住宿', cost: '-', transport: '步行回房', hours: '-', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr, web: HOTEL.web,
+          notes: ['早睡儲備體力，迎接隔日 07:30 富士山包車。'] }
+      ]
+    },
+    {
+      day: 2, date: '2027-01-30', weekday: '六',
+      title: '富士山與河口湖專屬包車一日遊 ＆ 客廳和牛暖心鍋物',
+      highlight: '07:30 富士山包車 ➔ 新倉山淺間公園 ➔ 雲朵不動麵 ➔ 大石公園 ➔ 全景纜車 ➔ 客廳黑毛和牛壽喜燒派對',
+      weather: '河口湖約 -4–5°C，比東京市區低 5–8°C，湖畔風大、石階易結冰。請備羽絨外套、毛帽、手套、圍巾、防滑鞋。（出發前請查最新預報）',
+      pass: '10 小時專屬包車，無需購買交通票券；回東京後晚餐於客廳自煮。',
+      lastTrain: '週六中央道易塞車：07:30 準時發車、16:00 準時返程，預計 18:30 返抵飯店（回程預留 2.5 小時；包車標準 10 小時）。',
+      items: [
+        { time: '06:45–07:25', title: '【早餐】KOKO 客廳悠閒晨食', cat: '美食', cost: '昨晚超市已採買', transport: '飯店客廳自理', hours: '-', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr,
+          notes: ['必吃：日本鮮乳、草莓、烤可頌配熱咖啡。免去外面受凍找早餐。'], photo: '清晨利用客廳大窗自然光拍餐桌上的草莓早餐靜物特寫。' },
+        { time: '07:30', title: 'KOKO HOTEL 出發（富士山專屬包車）', cat: '交通', cost: '全日包車約 60,000 JPY（約 NT$ 12,600）', transport: '專屬包車直達（首都高、中央道）', hours: '-', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr, web: HOTEL.web,
+          notes: [
+            '交通提示：車輛準時在門口等候，防寒外套、背包與採買戰利品皆可置於車內，下車以輕便為主。',
+            '時間合理化：07:30 準時發車，成功趕在八王子收費站與小佛隧道週末大塞車前通過！'
+          ], photo: '開上中央道遠處富士山雪白山頭首次露出時，拍下前擋風玻璃第一視角。' },
+        { time: '09:30–11:15', title: '新倉山淺間公園', cat: '景點', cost: '免費', transport: '包車直達第一停車場', hours: '園區 24 小時開放', q: '新倉山浅間公園', ja: '新倉山浅間公園', addr: '山梨県富士吉田市浅間2-4-1', web: 'https://www.google.com/search?q=%E6%96%B0%E5%80%89%E5%B1%B1%E6%B7%BA%E9%96%93%E5%85%AC%E5%9C%92+%E5%AE%98%E6%96%B9',
+          notes: [
+            '必看絕景：登頂忠靈塔展望台，飽覽「朱紅五重塔＋白雪富士山＋市街」經典全景。',
+            '避坑建議：清晨 398 階石階易結暗冰，建議全家走平緩的無障礙緩坡道。',
+            '必買伴手禮：神社富士山造型除災御守與四季朱印帳。',
+            '購物提示：神社社務所販售之御守與朱印僅收日圓現鈔，無提供刷卡與退稅，建議準備千円紙鈔或百円硬幣以利快速結緣。'
+          ], photo: '忠靈塔觀景台用 1x 或 2x 鏡頭，五重塔置於左側、富士山置於右中，晨間順光臉部極度立體。' },
+        { time: '11:35–12:50', title: '【午餐】ほうとう不動（東戀路店）', cat: '美食', cost: '約 7,000 JPY（約 NT$ 1,470）', transport: '包車約 15 分', hours: '11:00–20:00（麵條售完提早打烊）', q: 'ほうとう不動 東恋路店', ja: 'ほうとう不動 東恋路店', addr: '山梨県南都留郡富士河口湖町船津東恋路2458', web: 'http://www.houtou-fudou.jp/',
+          notes: [
+            '必吃必買：山梨名物熱呼呼南瓜蔬菜鐵鍋燉烏龍麵（ほうとう）暖胃；可買特製富士山造型七味粉陶罐。備案：小作 河口湖店。',
+            '購物提示：收銀櫃檯旁陳列的不動特製七味粉陶罐為易碎陶製品，結帳時可請店員多加一層氣泡紙保護，採買後直接放回包車後座，避免隨身碰撞。'
+          ], photo: '在建築大師保坂猛設計的宛如「巨大白色雲朵」純白建築前拍全家全身合影。' },
+        { time: '13:05–14:15', title: '大石公園 ＆ 自然生活館', cat: '景點', cost: '免費（冰淇淋約 500 JPY/支自理）', transport: '包車約 15 分', hours: '公園 24H；生活館至 17:15', q: '大石公園 河口湖', ja: '大石公園', addr: '山梨県南都留郡富士河口湖町大石2585', web: 'https://www.google.com/search?q=%E5%A4%A7%E7%9F%B3%E5%85%AC%E5%9C%92+%E6%B2%B3%E5%8F%A3%E6%B9%96+%E5%AE%98%E6%96%B9',
+          notes: [
+            '必玩：沿河北岸長廊散步，欣賞零死角富士山與水面倒影。',
+            '必吃必買伴手禮：巨峰葡萄霜淇淋；富士山造型年輪蛋糕、FUJIYAMA COOKIE 手工餅乾、在地藍莓果醬。',
+            '購物提示：河口湖自然生活館內多數土產伴手禮（餅乾、果醬）皆提供滿 5,500 JPY（含稅）免稅服務，結帳時務必出示全員護照正本以享 10% 退稅；富士山造型餅乾質地酥脆，建議平放於購物提袋上層。'
+          ], photo: '在湖畔石碑長廊前平視低角度拍攝，背景為遼闊湖面與白雪富士山；手拿紫色葡萄冰淇淋與富士山借位同框。' },
+        { time: '14:35–15:55', title: '河口湖全景纜車（備案：天晴號遊船）', cat: '景點', cost: '門票約 3,500 JPY（約 NT$ 735）', transport: '包車約 15 分', hours: '纜車/遊船至 16:00', q: '河口湖 富士山パノラマロープウェイ', ja: '富士山パノラマロープウェイ', addr: '山梨県南都留郡富士河口湖町浅川1163-1', web: 'https://www.mtfujiropeway.jp/',
+          notes: [
+            '必玩：天上山公園敲響「天上的鐘」祈求平安；買兔子神社健步御守與炭烤醬油糰子。',
+            '熔斷機制：若排隊逾 30 分鐘，直接切換到對面搭「天晴號遊船」（20 分鐘免受凍）。',
+            '購物提示：山頂狸貓茶屋與兔子神社御守以現鈔交易為主；投擲除厄陶瓦片（かわらけ）為投幣自取（100 JPY 兩枚），建議預留零錢。'
+          ], photo: '山頂「天上的鐘」框景處以富士山為背景合影；搭船則在二層甲板拍前進水花與壯闊山勢。' },
+        { time: '16:00–18:30', title: '啟程返回東京市區 ➔ KOKO HOTEL', cat: '交通', cost: '費用已含於包車', transport: '專屬包車（中央道）', hours: '-', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr, web: HOTEL.web,
+          notes: ['時間合理化：冬季約 17:05 日落，16:00 準時發車。週六傍晚進城車流大，預留 2.5 小時路程，全員在暖氣車內補眠休息，約 18:30 返抵飯店門口。', '包車直達門口，將採買的伴手禮與大衣一次帶回房間放妥，結束 10 小時專車。'], photo: '離開河口湖時捕捉夕陽將富士山染成淡粉紅色的「紅富士」餘暉。' },
+        { time: '18:35–19:15', title: 'LIFE 超市 採買壽喜燒食材', cat: '購物', cost: '採買約 5,000–6,500 JPY', transport: '步行 3 分', hours: '營業至 24:00', q: 'ライフ 押上駅前店', ja: 'ライフ 押上駅前店', addr: '東京都墨田区押上1丁目10-3', web: 'https://www.lifecorp.jp/',
+          notes: [
+            '必買：黑毛和牛片、今半壽喜燒醬汁、日本大蔥、嫩豆腐、生食級雞蛋、讚岐烏龍麵條。',
+            '必吃：熟食區現炸唐揚炸雞作為前菜。',
+            '購物提示：傍晚 18:30 後生鮮肉品櫃常有「20%～40% 折扣標籤（割引貼紙）」，挑選黑毛和牛火鍋肉片時認準黃色/紅色特價標籤最划算；壽喜燒專用醬汁瓶身標有「濃縮/ストレート」，若買濃縮醬汁記得加買一小瓶飲用水稀釋。'
+          ], photo: '拍和牛肉盤細密油花特寫，與家人推購物車滿載食材的超市日常。' },
+        { time: '19:20–21:00', title: '【晚餐】客廳和牛壽喜燒派對', cat: '美食', cost: '費用如上', transport: '飯店客廳與廚房', hours: '-', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr, web: HOTEL.web,
+          notes: ['必吃必玩：用飯店電磁爐現煮壽喜燒，和牛涮 5 秒沾蛋液入口即化，收尾下烏龍麵吸飽精華。'], photo: '斜上方俯拍整桌滾燙的和牛鍋物與草莓切盤，拍全家圍坐開動的家庭照。' }
+      ]
+    },
+    {
+      day: 3, date: '2027-01-31', weekday: '日',
+      title: '池袋動漫、太陽城寶可夢、水族館 ＆ 池袋東口集中採買',
+      highlight: '南池袋公園早午餐 ➔ animate 總店 ➔ 太陽城寶可夢旗艦 ➔ 陽光水族館空中企鵝 ➔ 太陽城早鳥晚餐 ➔ 池袋東口採買衝刺線（含 Tartine 花束脆餅）',
+      weather: '東京約 2–10°C。大量室內商場與水族館，外套方便穿脫即可；水族館屋頂戶外區偏冷。（出發前請查最新預報）',
+      pass: '押上搭半藏門線至大手町轉丸之內線直達池袋東口；刷 Suica / PASMO 即可。',
+      lastTrain: '池袋 ➔ 押上 約 35 分，預計 19:25 搭車，末班車無壓力。',
+      items: [
+        { time: '08:15–09:10', title: '【早餐】KOKO 客廳悠閒晨食', cat: '美食', cost: '已採買', transport: '飯店客廳自理', hours: '-', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr,
+          notes: ['必吃：鮮乳、草莓、烤吐司與咖啡，充足補眠後從容出發。'] },
+        { time: '09:15–09:55', title: '移動：押上 ➔ 池袋東口', cat: '交通', cost: '地鐵約 1,000 JPY / 全家', transport: '地鐵（約 35 分）', hours: '-', q: 'Ikebukuro Station', ja: '池袋駅', addr: '東京都豊島区南池袋1-28-1', web: 'https://www.tokyometro.jp/lang_tcn/',
+          notes: ['乘車路線：押上搭半藏門線至大手町，轉丸之內線直達池袋東口。刷 IC 卡進出。'] },
+        { time: '10:00–11:15', title: '南池袋公園 ＆ Cafe Racines 早午餐', cat: '美食', cost: '早午餐約 5,000 JPY', transport: '池袋東口步行約 7 分', hours: '公園 08:00–22:00；餐廳 09:00–22:00', q: '南池袋公園', ja: '南池袋公園', addr: '東京都豊島区南池袋2-21-1', web: 'https://www.google.com/search?q=Racines+FARM+to+PARK+%E5%8D%97%E6%B1%A0%E8%A2%8B+%E5%AE%98%E6%96%B9',
+          notes: ['必吃：Racines 現烤可頌鬆餅（Croffle）、熱狗堡與手沖拿鐵。綠意草坪散策。'], photo: '挑高玻璃屋以大草坪晨光為背景拍照；草坪中央拍全家慢步合照。' },
+        { time: '11:25–12:35', title: 'animate 池袋總店', cat: '購物', cost: '購物自理', transport: '步行約 8 分', hours: '週末 10:00–20:00', q: 'アニメイト池袋本店', ja: 'アニメイト池袋本店', addr: '東京都豊島区東池袋1-20-7', web: 'https://www.animate.co.jp/shop/ikebukuro/',
+          notes: [
+            '必玩必買：世界最大 9 層樓動漫館！採買人氣動畫周邊、漫畫小說、限定徽章盲盒／扭蛋。',
+            '避坑提示：人潮極多，約定 1F 大廳為集合點避免走散。',
+            '購物提示：animate 池袋總店設有專屬免稅櫃檯（通常位於高樓層或特定服務台），結帳滿 5,500 JPY（含稅）可直接退稅；盲盒類商品每人每款常有「限購數量標籤」，挑選前留意展示架說明。'
+          ], photo: '1F 門口外巨幅 LED 電視牆與動漫看板前合影，拍出「動漫聖地」氛圍感。' },
+        { time: '12:45–14:25', title: '太陽城 (Sunshine City) ＆ Pokémon Center Mega Tokyo', cat: '購物', cost: '購物與甜點自理', transport: '太陽城 alpa 2F（室內直達）', hours: '商場與門市 10:00–20:00', q: 'ポケモンセンターメガトウキョー', ja: 'ポケモンセンターメガトウキョー', addr: '東京都豊島区東池袋3-1-2 サンシャインシティ 専門店街アルパ 2F', web: 'https://www.pokemon.co.jp/shop/',
+          notes: [
+            '必玩必吃：全東京最大寶可夢中心旗艦店！等身大超夢與噴火龍雕像，卡牌對戰區；Pikachu Sweets 皮卡丘甜點；買 Mega Tokyo 限定玩偶。',
+            '收納建議：若此時購買的大型玩偶較佔空間，可善用 alpa 2F 投幣置物櫃暫存，後續參觀水族館更為輕鬆。',
+            '購物提示：寶可夢中心 Mega Tokyo 支援免稅結帳（需在免稅專用通道出示護照正本）；熱門限定款玩偶或聯名商品每人限購 1～2 件；Pikachu Sweets 專賣店的甜點外帶盒與包裝紙袋若想完整收藏，可請店員額外提供全新紙袋並加裝固定架。'
+          ], photo: '蹲低使用 1x 人像抓拍孩子與超夢雕像對峙的合影；將精靈球甜點放在粉色拍照台拍特寫。' },
+        { time: '14:30–15:45', title: '陽光水族館 (Sunshine Aquarium)', cat: '景點', cost: '門票約 7,000 JPY / 全家（約 NT$ 1,470）', transport: '太陽城頂樓（搭直達電梯）', hours: '冬季 10:00–18:00（最後入場 17:00）', q: 'サンシャイン水族館', ja: 'サンシャイン水族館', addr: '東京都豊島区東池袋3-1 サンシャインシティ ワールドインポートマートビル屋上', web: 'https://sunshinecity.jp/aquarium/',
+          notes: [
+            '必玩：仰頭看「天空企鵝」在摩天大樓間游泳、幽藍水母隧道。',
+            '時間合理化：14:30 入館完美避開閉館前擁擠潮，時間充裕觀賞「天空企鵝」與水母展區。',
+            '重點提示：出發前 2 週於官網先買好指定時段電子票（預約 14:30 入場），掃碼入館免排隊。',
+            '購物提示：出口處紀念品店的水母仙貝與企鵝絨毛掛飾若滿 5,500 JPY 亦可辦理退稅；館內扭蛋機多為限定款，建議自備多枚 100 JPY / 500 JPY 硬幣。'
+          ], photo: '透明水槽下方 45 度向上仰拍，企鵝游過時連同摩天大樓與藍天同框；在幽藍水母光影下拍全家背影剪影。' },
+        { time: '16:00–17:15', title: '【早鳥晚餐】太陽城 3F 美食街（現場 3 選 1）', cat: '美食', cost: '約 6,000–8,000 JPY（控制在 8,000 內）', transport: '太陽城 alpa 3F', hours: '各店至 22:00', q: 'サンシャインシティ アルパ', ja: 'サンシャインシティ アルパ', addr: '東京都豊島区東池袋3-1-3', web: 'https://sunshinecity.jp/',
+          options: [
+            { name: '首選 A：回し寿司 活（太陽城 alpa 3F）', detail: 'Tabelog 3.50。鮮切鮪魚、大干貝（全家約 7,000 JPY）。', q: '回し寿司 活 サンシャインシティ' },
+            { name: '首選 B：洋食 滿天星（太陽城 alpa 3F）', detail: 'Tabelog 3.47。多蜜醬爆汁漢堡排配蛋包飯（全家約 7,500 JPY）。', q: '洋食 満天星 サンシャインシティ' },
+            { name: '首選 C：利久牛舌（池袋商場店）', detail: 'Tabelog 3.48。炭烤厚切牛舌配熱牛尾湯（全家約 7,500 JPY）。', q: '牛たん炭焼 利久 池袋' }
+          ], notes: ['時間合理化：16:00～16:15 提早入座是神操作！完全避開 17:30 美食街大排長龍的等候時間，快速享用美味晚餐。', '動線優勢：晚餐後再進行集中購物，取回剛才暫存的物品後順路前往車站。'], photo: '拍滿桌壽司盤堆疊壯觀畫面，或蛋包飯劃開嫩蛋滑落的動態特寫。' },
+        { time: '17:20–19:15', title: '★ 採買衝刺線 ＆ 人氣伴手禮（一條路買齊進車站）', cat: '購物', cost: '購物自理（全數免稅 10%）', transport: '從太陽城一路走回池袋東口站（步行 5 分內街道與車站共構）', hours: '各店至 20:00～22:30', q: '池袋 東口 BOOK-OFF', ja: '池袋駅東口', addr: '東京都豊島区南池袋1丁目', web: 'https://www.bookoff.co.jp/',
+          options: [
+            { name: '1. Workman Colors（太陽城 2F）', detail: '超保暖極輕外套、防滑雪靴與工裝褲。支援外國旅客免稅，防寒外套與雪靴尺碼日本標示通常偏合身（M/L/LL），建議現場直接試穿厚毛衣再挑選。', q: 'ワークマンカラーズ サンシャインシティアルパ店' },
+            { name: '2. L-Breath / Victoria 大型運動館', detail: '採購 On 跑步鞋、HOKA 厚底健走鞋、Salomon 越野鞋與日版 North Face 外套。結帳滿 5,500 JPY 可免稅 10%，配合特定信用卡享額外 5% 折扣。', q: 'Victoria 池袋' },
+            { name: '3. BOOK-OFF 池袋東口店（二手挖寶）', detail: '淘二手漫畫、Switch/PS 遊戲、公仔卡牌。二手商品不適用退稅且現狀販售，購買前務必檢查書況標示、光碟讀取面與盒況標示。', q: 'BOOK-OFF 池袋東口店' },
+            { name: '4. GU 池袋東口大型店', detail: '大型店限定聯名款睡衣、極暖重磅長褲、兒童平價冬裝。自助結帳機設有專用免稅掃描口，需手動點選「Tax Free」並掃描護照晶片。', q: 'GU 池袋東口' },
+            { name: '5. Tartine 池袋東武店（人氣花束脆餅）', detail: '東武百貨 B1 超美童話鐵盒的浪漫花束造型脆餅，常態排隊爆款。招牌草莓杏仁花束甜筒餅乾極度精緻脆弱，務必請店員裝盒，回房時平放於提袋最上層。', q: 'Tartine 池袋東武' },
+            { name: '6. 松本清 / SUNDRUG 免稅藥妝', detail: '合利他命、感冒微粒、EVE 止痛錠、休足時間。結帳由店員先掃「免稅 10%＋加碼 3%～7% 折價券」再過護照；藥品以特製透明袋封裝，離境前不可拆封。', q: 'マツモトキヨシ 池袋東口' }
+          ], notes: [
+            '動線設計：太陽城 2F 取回置物櫃物品 ➔ 買 Workman 保暖外套 ➔ 出門順路進運動館看 On/HOKA 鞋 ➔ 逛 BOOK-OFF 淘二手卡牌/遊戲 ➔ GU 買限定睡衣 ➔ 至車站旁東武百貨 B1 採買 Tartine 浪漫花束造型脆餅（超美童話鐵盒，常態排隊爆款）➔ 進站前在藥妝店打包免稅藥品。'
+          ], photo: '在霓虹招牌燦爛的池袋東口步行街上，拍全家人手提購物袋的東京街頭生活感剪影。' },
+        { time: '19:25–20:00', title: '池袋站搭車 ➔ 返抵 KOKO HOTEL', cat: '住宿', cost: '地鐵約 1,000 JPY / 全家', transport: '地鐵（約 35 分）', hours: '-', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr, web: HOTEL.web,
+          notes: ['重點提示：直達押上站出站即回房，客廳開箱試穿新衣服新鞋，貼休足時間泡澡！'] }
+      ]
+    },
+    {
+      day: 4, date: '2027-02-01', weekday: '一',
+      title: '林蔭神宮、增上寺節分祭前瞻、寶可夢 DX ＆ 丸之內香檳金點燈',
+      highlight: '明治神宮森林 ➔ 芝公園增上寺拍鐵塔 ➔ 鐵塔展望台午餐 ➔ 日本橋寶可夢 DX ➔ 丸之內紅磚夜景 ➔ 一番街流行伴手禮掃貨 ➔ 名店晚餐',
+      weather: '東京約 3–11°C。明治神宮碎石參道長，請穿好走的健走鞋；展望台風大加一件外套。（出發前請查最新預報）',
+      pass: '今日多線轉乘（半藏門／千代田／日比谷／淺草／銀座線），建議全程刷 Suica / PASMO。',
+      lastTrain: '明治神宮 2 月份約 16:50 閉門；東京站 ➔ 押上約 20 分，預計 20:25 返抵。',
+      items: [
+        { time: '08:15–09:05', title: '【早餐】KOKO 客廳悠閒晨食', cat: '美食', cost: '已採買', transport: '飯店客廳自理', hours: '-', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr,
+          notes: ['必吃：鮮乳、草莓、抹醬厚切吐司與咖啡，輕裝出門。'] },
+        { time: '09:15–09:45', title: '移動：押上 ➔ 明治神宮前', cat: '交通', cost: '地鐵約 1,000 JPY / 全家', transport: '地鐵（約 30 分）', hours: '-', q: 'Meiji-jingumae Harajuku Station', ja: '明治神宮前〈原宿〉駅', addr: '東京都渋谷区神宮前1-18-20', web: 'https://www.tokyometro.jp/lang_tcn/',
+          notes: ['乘車路線：押上搭半藏門線至表參道，同月台轉千代田線至明治神宮前站。'] },
+        { time: '09:50–11:15', title: '明治神宮 森林參拜', cat: '景點', cost: '免費', transport: '原宿口步行入內散策', hours: '2 月份 06:20–16:50（日落閉門）', q: '明治神宮', ja: '明治神宮', addr: '東京都渋谷区代々木神園町1-1', web: 'https://www.meijijingu.or.jp/',
+          notes: [
+            '時間合理化：南參道林道來回步行約 30 分鐘，預留 85 分鐘可從容在大鳥居、酒樽牆拍照，並於本殿參拜洗手。',
+            '必玩必看：大鳥居、南參道森林浴、清酒樽木桶牆拍全家福。',
+            '必買伴手禮：神樂殿開運木鈴、心身健全守、十二生肖繪馬。',
+            '購物提示：明治神宮境內之繪馬與神札御守僅收現金；參道旁之「森林之家（フォレストテラス明治神宮）」伴手禮商店則支援信用卡與感應支付，販售明治神宮限定和菓子與銘果，滿額可免稅。'
+          ], photo: '大鳥居前退後 20 米用 0.5x 超廣角仰拍凸顯宏偉；在巨幅彩繪清酒桶牆前排成一列拍攝和風全家福。' },
+        { time: '11:20–11:45', title: '移動：明治神宮前 ➔ 芝公園（赤羽橋）', cat: '交通', cost: '地鐵約 880 JPY / 全家', transport: '千代田線至日比谷，轉日比谷線至神谷町（或轉大江戶線至赤羽橋）', hours: '-', q: 'Akabanebashi Station', ja: '赤羽橋駅', addr: '東京都港区東麻布1丁目', web: 'https://www.kotsu.metro.tokyo.jp/subway/',
+          notes: ['動線重點：原站搭車直達日比谷轉車，免走代代木，節省體力。'] },
+        { time: '11:50–12:45', title: '增上寺 ＆ 王子芝公園（★ 節分追儺祭典氛圍體驗）', cat: '景點', cost: '免費', transport: '步行散策', hours: '大殿 09:00–17:00（公園 24 小時）', q: '増上寺', ja: '増上寺', addr: '東京都港区芝公園4-7-35', web: 'https://www.zojoji.or.jp/',
+          notes: ['必玩必看：增上寺大殿與朱紅東京鐵塔同框；千體子育地藏尊（戴紅小毛帽配彩色風車）。', '季節限定活動：增上寺進行「節分追儺式」前祭活動！境內搭起巨型祭台，可買到節分限定開運「福豆」（附紅鬼/青鬼面具）與昇運繪馬，為全家祈福驅邪！'], photo: '大殿前廣場中線利用 1x 或 2x 望遠拍攝「古剎飛簷＋鮮紅現代鐵塔同框」對比；芝公園草坪拍全家仰望鐵塔的背影照。' },
+        { time: '12:50–14:20', title: '東京鐵塔（展望台 ＆ 午餐）', cat: '景點', cost: '展望台約 3,600 JPY（午餐約 4,500 JPY）', transport: '芝公園步行約 5 分', hours: '展望台 09:00–22:30；2F 美食街 10:00–22:00', q: '東京タワー', ja: '東京タワー', addr: '東京都港区芝公園4-2-8', web: 'https://www.tokyotower.co.jp/',
+          notes: [
+            '必玩必吃：Main Deck 150m 主展望台挑戰 Skywalk Window 玻璃地板；2F 享用熱騰騰拉麵與日式咖哩午餐。',
+            '必買伴手禮：鐵塔限定造型保溫瓶、礦泉水與迷你鐵塔模型。',
+            '購物提示：東京鐵塔 2F FootTown 官方紀念品店支援滿 5,500 JPY 免稅；部分鐵塔造型瓶裝水或易碎玻璃擺飾若購買多件，建議手提或用毛巾包裹放入隨身背包，不可直接放入行李箱受擠壓。'
+          ], photo: '踩在透明玻璃地板上垂直俯拍懸空腳底與縮小地面車流；景觀台圓弧窗前拍半身明亮逆光剪影。' },
+        { time: '14:25–14:50', title: '移動：東京鐵塔 ➔ 日本橋', cat: '交通', cost: '地鐵約 720 JPY / 全家', transport: '步行至淺草線「大門站」直達「日本橋站」（約 12 分）', hours: '-', q: 'Nihombashi Station', ja: '日本橋駅', addr: '東京都中央区日本橋1丁目', web: 'https://www.kotsu.metro.tokyo.jp/subway/',
+          notes: ['動線優勢：淺草線一線直達免換車，出站直升高島屋東館。'] },
+        { time: '14:55–16:20', title: '★ Pokémon Center TOKYO DX（日本橋高島屋 S.C. 東館 5F）', cat: '購物', cost: '購物自理', transport: '步行至高島屋東館 5F', hours: '10:30–21:00（官方公告為準）', q: 'ポケモンセンタートウキョーDX', ja: 'ポケモンセンタートウキョーDX', addr: '東京都中央区日本橋2-11-2 日本橋髙島屋S.C. 東館5F', web: 'https://www.pokemon.co.jp/shop/',
+          notes: [
+            '必玩必買：等身大卡比獸＋皮卡丘＋夢幻迎賓雕像；買東京 DX 限定江戶消防火消皮卡丘與日本和菓子禮盒。',
+            '購物提示：日本橋高島屋 S.C. 採「百貨統一退稅」或「專櫃現折免稅」模式，結帳時先確認收銀機是否直接扣除 10% 消費稅；高島屋對外國旅客常態提供 95 折 Hello Kitty 貴賓卡（高島屋免稅服務台領取），但在寶可夢中心通常除外不適用，需以店家現場公告為準。'
+          ], photo: '孩子站在圓滾滾卡比獸大肚子前張開雙臂合影；觸控圖鑑螢幕前捕捉操作的生動側影。' },
+        { time: '16:30–17:35', title: '東京車站（丸之內廣場點燈 ＆ 香檳金燈海）', cat: '景點', cost: '免費', transport: '步行約 10 分（或搭銀座線轉乘）', hours: '廣場全天開放（日落後點燈至 24:00）', q: '東京駅 丸の内駅舎', ja: '東京駅 丸の内駅舎', addr: '東京都千代田区丸の内1-9-1', web: 'https://www.jreast.co.jp/estation/stations/1039.html',
+          notes: ['必玩必看：欣賞 17:05 日落時分百年巴洛克紅磚車站打燈夜景；進挑高圓頂大廳抬頭看十二生肖浮雕徽章。', '時間合理化：冬季 17:05 日落，16:30 抵達先拍夕陽餘暉，17:00 準時迎接紅磚車站與丸之內仲通り香檳金百萬燈海同時亮起！',
+            '季節限定活動：轉進站旁的丸之內仲通り（Marunouchi Street），超過 300 棵林蔭大道行道樹掛滿上百萬顆「丸之內專屬香檳金」LED 璀璨燈海，漫步其中極度浪漫！'], photo: '站前白色廣場地面微水窪拍出紅磚倒影，全家站在廣場中軸線以夜景模式合影；大廳中心仰頭 90 度拍八角穹頂金黃細節。' },
+        { time: '17:40–18:50', title: '★ 東京車站一番街 ＆ 大丸百貨流行伴手禮掃貨', cat: '購物', cost: '伴手禮採買自理', transport: '東京站地下 1F / 大丸 1F', hours: '伴手禮街至 20:30；大丸百貨至 20:00（部分店舖至 20:00）', q: '東京駅一番街', ja: '東京駅一番街', addr: '東京都千代田区丸の内1-9-1 東京駅八重洲口地下1F', web: 'https://www.google.com/search?q=%E6%9D%B1%E4%BA%AC%E9%A7%85%E4%B8%80%E7%95%AA%E8%A1%97+%E5%85%AC%E5%BC%8F',
+          options: [
+            { name: '1. N.Y.C. SAND（大丸 1F）', detail: '招牌焦糖夾心餅乾（N.Y. Caramel Sand），濃郁焦糖爆漿拉絲，送禮天花板；常態排隊約 15～25 分鐘，隊伍常在百貨外走廊，認明舉牌「最後尾」工作人員入列。', q: 'N.Y.C.SAND 東京駅 大丸' },
+            { name: '2. NEWYORK PERFECT CHEESE（東京站南通路）', detail: '金箔黑盒包裝，貓舌餅乾包裹切達起司與白巧克力，鹹甜交織極度濃郁；傍晚偶有限購或部分大盒售罄，若見中盒（8 入/12 入）建議直接下手。', q: 'NEWYORK PERFECT CHEESE 東京駅' },
+            { name: '3. Butter Butler（Gransta B1）', detail: '頂級焦糖奶油費南雪，法國海鹽與楓糖漿香氣四溢。', q: 'Butter Butler 東京駅 グランスタ' },
+            { name: '4. 年輪家（Nenrinya）', detail: '結霜糖霜年輪蛋糕（しっかり芽），外脆內扎實，常溫保存約 9 天，建議買條裝方便裝箱防碎。', q: 'ねんりん家 東京駅' },
+            { name: '5. Calbee+（點心樂園）', detail: '現炸熱生洋芋片佐厚切起司，現場買現吃！', q: 'カルビープラス 東京駅' }
+          ], notes: [
+            '動線優勢：採買完畢後就近於車站 B1 用餐，隨後直接進站搭車返程。',
+            '購物提示：大丸 1F/B1 購買之包裝伴手禮可合併計算滿 5,500 JPY，持發票、商品與護照正本至指定退稅櫃檯辦理退稅（百貨通常會收取約 1.55% 手續費）。',
+            '排隊與限購：N.Y.C. SAND 常態排隊 15～25 分鐘；NEWYORK PERFECT CHEESE 傍晚偶有限購或大盒售罄，見中盒（8 入/12 入）建議直接下手。'
+          ], photo: '手拿熱氣騰騰淋滿起司的現炸 Calbee 洋芋片在霓虹招牌前拍生活特寫。' },
+        { time: '18:55–20:00', title: '【晚餐】東京站名店（現場 3 選 1）', cat: '美食', cost: '約 4,500–7,800 JPY（控制在 8,000 內）', transport: '東京站地下 1F / 旁邊 KITTE', hours: '各店至 22:00/23:00', q: '東京駅一番街', ja: '東京駅一番街', addr: '東京都千代田区丸の内1-9-1', web: 'https://www.google.com/search?q=%E6%9D%B1%E4%BA%AC%E9%A7%85%E4%B8%80%E7%95%AA%E8%A1%97+%E5%85%AC%E5%BC%8F',
+          options: [
+            { name: '首選 A：極味や（極味屋）漢堡排（一番街）', detail: '鐵板現煎半熟黑毛和牛漢堡排（約 7,500 JPY）。', q: '極味や 東京駅' },
+            { name: '首選 B：斑鳩（Ikaruga）東京拉麵街', detail: '濃厚豚骨魚介雙湯頭配炙燒叉燒（約 4,800 JPY）。', q: '斑鳩 東京ラーメンストリート' },
+            { name: '首選 C：根室花丸 壽司（KITTE 5F）', detail: '北海道空運花咲蟹湯與厚切生干貝（約 7,000 JPY）。', q: '根室花まる KITTE丸の内' }
+          ], notes: ['現場依胃口 3 選 1，用餐完畢直接在東京站搭車直達飯店。'], photo: '拍極味屋小鐵板炙烤滋滋作響冒白煙特寫；或在 KITTE 5F 露天中庭順道拍車站夜景。' },
+        { time: '20:05–20:25', title: '東京車站 ➔ 返抵 KOKO HOTEL', cat: '住宿', cost: '地鐵約 800 JPY / 全家', transport: 'JR 總武快速轉半藏門線（約 20 分）', hours: '-', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr, web: HOTEL.web,
+          notes: ['從東京站快速回到押上，直接回房卸貨整理休息。'] }
+      ]
+    },
+    {
+      day: 5, date: '2027-02-02', weekday: '二',
+      title: '老街漫活、晴空塔和牛燒肉、夕陽夜景 ＆ 限定採買',
+      highlight: '淺草雷門散策 ➔ 隅田川水岸步道 ➔ 晴空塔 30F 敘敘苑午餐 ➔ 晴空街道重點生活採買 ➔ 墨田水族館 ➔ 晴空塔夕陽百萬夜景 ➔ 押上名店晚餐 ➔ 晴空塔限定伴手禮採買',
+      weather: '東京約 3–11°C。隅田川步道過河風大，備好圍巾與帽子；晴空塔展望台請多穿一層。（出發前請查最新預報）',
+      pass: '押上 ➔ 淺草僅 2 站（都營淺草線約 4 分，約 720 JPY / 全家）；其餘步行，刷 IC 卡即可。',
+      lastTrain: '活動集中在飯店徒步圈，無末班車壓力；備選錦糸町搭半藏門線 1 站（3 分）。',
+      items: [
+        { time: '08:15–09:10', title: '【早餐】KOKO 客廳悠閒晨食', cat: '美食', cost: '已採買', transport: '飯店客廳自理', hours: '-', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr,
+          notes: ['必吃：日本鮮乳、草莓、麵包配手沖咖啡。輕裝出門。'] },
+        { time: '09:15–09:20', title: '移動：押上 ➔ 淺草', cat: '交通', cost: '地鐵約 720 JPY / 全家', transport: '都營淺草線（僅 2 站，約 4 分）', hours: '-', q: 'Asakusa Station', ja: '浅草駅', addr: '東京都台東区浅草1丁目', web: 'https://www.kotsu.metro.tokyo.jp/subway/',
+          notes: ['押上搭淺草線直達淺草站（僅 2 站，1 號或 3 號出口），刷 IC 卡即達。'] },
+        { time: '09:25–11:20', title: '淺草寺 雷門 ＆ 仲見世老街（★ 節分追儺會盛典）', cat: '景點', cost: '小吃約 2,500 JPY', transport: '出站步行約 2 分', hours: '境內 24H；本堂 06:30–17:00；店家約 10:00–18:00', q: '浅草寺 雷門', ja: '浅草寺 雷門', addr: '東京都台東区浅草2-3-1', web: 'https://www.senso-ji.jp/',
+          notes: [
+            '必玩必吃：雷門大燈籠合影、大香爐撫煙祈福；花月堂大菠蘿麵包、木村家現烤人形燒、淺草肉餅。',
+            '必買伴手禮：雷門交通安全御守、常盤堂雷神米香禮盒。',
+            '季節限定活動：【淺草寺節分追儺會前夕】境內上演傳承百年「七福神福聚之舞」，現場僧侶高喊「千秋万歳、福は内」撒福豆；買一包淺草寺限定「開運福豆」！避開了明日 2/3 正祭的數萬人潮，逛起來最舒服安全！',
+            '避坑提示：老街嚴禁邊走邊吃，請在店家指定立食區享用完畢再前進。',
+            '購物提示：仲見世街各小吃攤與工藝小舖多為獨立個體戶，無配合免稅服務；現做菠蘿麵包建議當天食用完畢，不宜久放打包進箱。'
+          ], photo: '站在雷門巨大紅燈籠正下方，用 0.5x 超廣角仰拍燈籠底部的「木雕龍」與經典全家福；抓拍節分盛典上僧侶與福聚之舞古典服飾。' },
+        { time: '11:25–12:20', title: '隅田川步道 (Sumida River Walk)', cat: '景點', cost: '免費', transport: '步行漫步跨河', hours: '07:00–22:00', q: 'すみだリバーウォーク', ja: 'すみだリバーウォーク', addr: '東京都墨田区向島1丁目', web: 'https://www.google.com/search?q=%E3%81%99%E3%81%BF%E3%81%A0%E3%83%AA%E3%83%90%E3%83%BC%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF+%E5%AE%98%E6%96%B9',
+          notes: ['木棧道上拍電車擦身而過與無遮蔽晴空塔；穿越水町（Mizumachi）綠意公園直達晴空塔。'], photo: '步道中段以隅田川與整座無遮蔽晴空塔為景合影；找地面「Sorakara-chan 地貼」拍腳步紀念照。' },
+        { time: '12:30–14:15', title: '【午餐】敘敘苑 燒肉（晴空街道 30F）', cat: '美食', cost: '約 14,000 JPY（約 NT$ 2,940）', transport: '搭高層專用電梯至 30F', hours: '10:30–23:00（商業午餐至 16:00）', q: '叙々苑 東京スカイツリータウン・ソラマチ店', ja: '叙々苑 東京スカイツリータウン・ソラマチ店', addr: SOLAMACHI_ADDR + ' 30F', web: 'https://www.jojoen.co.jp/',
+          notes: [
+            '必吃必玩：超值商業午餐定食（和牛五花、烤蝦、特製沙拉、熱湯甜點），坐擁 30F 絕美高空景觀。',
+            '重要提示：需提前 1 個月（即 2027/01/02）於官網預訂座位。'
+          ], photo: '坐在景觀窗邊以東京市容為壯觀背景，拍攝和牛五花在烤網上火花跳躍與全家乾杯合照。' },
+        { time: '14:20–15:40', title: '★ 晴空街道 重點生活採買 ＆ 草莓祭（鄰近飯店優勢）', cat: '購物', cost: '購物自理（滿額免稅）', transport: '晴空街道 Solamachi 3F–4F', hours: '10:00–21:00', q: 'UNIQLO 東京スカイツリータウン・ソラマチ店', ja: 'ユニクロ 東京スカイツリータウン・ソラマチ店', addr: SOLAMACHI_ADDR + ' 3F', web: 'https://www.uniqlo.com/jp/ja/',
+          options: [
+            { name: '1. UNIQLO 晴空塔店（3F，UTme! 限定）', detail: '現場操作機台挑圖客製晴空塔限定圖騰 T 恤與刺繡托特包。印製需預留約 30～45 分鐘等候取件（可先送件印製，再去逛 3COINS，回頭憑取件聯領貨），滿 5,500 JPY 享 10% 免稅。', q: 'UNIQLO 東京スカイツリータウン・ソラマチ店' },
+            { name: '2. 3COINS +plus 大型店（3F）', detail: '比一般店大 2 倍！日系收納、美感餐具、旅行壓縮袋、晴空塔限定文具。滿 5,500 JPY 支援免稅，購買易碎陶瓷碗盤可請店員提供防撞包裝。', q: '3COINS+plus 東京スカイツリータウン・ソラマチ' },
+            { name: '3. Can★Do 百元店（4F）', detail: '日系精緻百元生活收納、美勞文具、零食糖果（均一價 110 JPY）。滿 5,500 JPY 可合併辦理免稅。', q: 'Can Do 東京スカイツリータウン・ソラマチ' }
+          ], notes: ['季節限定活動：Solamachi 商場 2F 正值「草莓祭（Strawberry Fair）」，可品嚐限定栃木晴空莓（Skyberry）大福與草莓可麗餅！', '時間合理化：UTme! 送印後逛 3COINS，15:40 買妥後直接走 3 分鐘回房間放戰利品，一身輕鬆再出門看水族館！'], photo: '在 UNIQLO UTme! 機台前捕捉全家一起在螢幕上設計晴空塔限定 T 恤的互動特寫。' },
+        { time: '15:50–16:40', title: '墨田水族館 (Sumida Aquarium)', cat: '景點', cost: '門票約 7,100 JPY / 全家（約 NT$ 1,491）', transport: 'Solamachi 5F–6F', hours: '平日 10:00–20:00（最後入場 19:00）', q: 'すみだ水族館', ja: 'すみだ水族館', addr: SOLAMACHI_ADDR + ' 5F・6F', web: 'https://www.sumida-aquarium.com/',
+          notes: [
+            '必玩：近距離看室內開放水槽企鵝游泳、巨大水母水族牆、呆萌花園鰻沙地大軍。',
+            '購物提示：墨田水族館紀念品店提供水族館專屬花園鰻長條抱枕與企鵝長條毛巾，結帳時可使用信用卡或 Suica 支付，滿額亦可在館內免稅櫃檯辦理退稅。'
+          ], photo: '站在開放水槽斜坡走道，捕捉企鵝從身邊滑行入水；近拍細長花園鰻探頭的呆萌大特寫。' },
+        { time: '16:45–17:55', title: '★ 東京晴空塔 (Skytree 展望台)', cat: '景點', cost: '天望甲板約 6,500 JPY（約 NT$ 1,365）', transport: '晴空塔 4F 入口進入', hours: '10:00–21:00（最後入場 20:00）', q: '東京スカイツリー', ja: '東京スカイツリー', addr: '東京都墨田区押上1-1-2', web: 'https://www.tokyo-skytree.jp/cn_t/',
+          notes: [
+            '精準卡位：登上 350m 天望甲板，正好迎上 17:05 金黃日落與富士山剪影，接著轉為繁星般的東京百萬夜景；挑戰 340F 強化玻璃地板。',
+            '購物提示：345F 晴空塔官方禮品店販售限定版「Sorakara-chan 模型吊飾」與「晴空塔金屬浮雕隨身鏡」，天望甲板限定商品只有持展望台門票在塔上商店才能買到，下樓至 1F 商店無販售。',
+            '重要提示：出發前 2 週於官網預約 16:45 入場電子票。'
+          ], photo: '17:00 前後往西南方遠眺富士山剪影拍日落照；17:25 以後調至夜景模式貼緊玻璃拍金色車流百萬夜景合照。' },
+        { time: '18:00–18:25', title: '回飯店放外套、洗把臉', cat: '住宿', cost: '-', transport: '步行約 3 分', hours: '-', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr, web: HOTEL.web,
+          notes: ['動線重點：下樓即到家，稍微歇歇腳、換上拖鞋洗臉休息，一身輕鬆再出門吃晚餐。'] },
+        { time: '18:30–19:45', title: '【晚餐】押上周邊人氣名店（現場 3 選 1）', cat: '美食', cost: '約 4,500–7,800 JPY（控制在 8,000 內）', transport: '晴空街道 / 押上站前步行 4～5 分', hours: '各店至 22:00/23:00', q: 'Tokyo Solamachi', ja: '東京ソラマチ', addr: SOLAMACHI_ADDR, web: 'https://www.tokyo-solamachi.jp/',
+          options: [
+            { name: '首選 A：前川 鰻魚飯（Solamachi 7F）', detail: '淺草百年老舖備長炭烤鰻魚（精選吃約 7,500–8,000 JPY）。', q: '前川 東京スカイツリータウン・ソラマチ店' },
+            { name: '首選 B：銀座天龍 煎餃（Solamachi 6F）', detail: '昭和金黃巨無霸煎餃配炒飯熱菜（約 6,500 JPY）。', q: '銀座天龍 東京スカイツリータウン・ソラマチ店' },
+            { name: '首選 C：鳥貴族 押上店（串燒釜飯）', detail: '均一價串燒與現煮雞肉釜飯（約 4,800 JPY）。', q: '鳥貴族 押上店' }
+          ], notes: ['現場依全家胃口 3 選 1。'], photo: '拍鰻魚飯黑金漆盒揭蓋油亮特寫；或在鳥貴族拍釜飯小鐵鍋揭蓋煙霧與金黃鍋巴。' },
+        { time: '19:50–21:00', title: '★ 晴空塔限定伴手禮採買 ＆ 藥妝補漏（Solamachi 2F / 松本清押上店）', cat: '購物', cost: '購物自理', transport: '晴空塔 2F / 押上站前', hours: '伴手禮街至 21:00；藥妝店至 22:00', q: 'Tokyo Solamachi 2F', ja: '東京ソラマチ 2F', addr: SOLAMACHI_ADDR + ' 2F', web: 'https://www.tokyo-solamachi.jp/',
+          options: [
+            { name: '1. 東京芭娜娜（Tokyo Banana）', detail: '晴空塔限定海獺款（抱著咖啡牛奶瓶）與 Chiikawa（吉伊卡哇）聯名香蕉布丁蛋糕。海獺款與聯名蛋糕常有晚間售罄情況，見現貨直接結帳。', q: '東京ばな奈 東京スカイツリータウン・ソラマチ' },
+            { name: '2. Sugar Butter Sand Tree', detail: '砂糖奶油樹白巧夾心脆餅（晴空塔限定提盒，送辦公室首選）。', q: 'シュガーバターサンドの木 東京スカイツリータウン・ソラマチ' },
+            { name: '3. 東京牛奶起司工房', detail: '海鹽卡門貝爾起司夾心餅乾。', q: '東京牛乳チーズ工房 ソラマチ' }
+          ], notes: ['下樓即買、直接回房打包：晴空塔 2F 伴手禮專區店舖可合併計算免稅，滿 5,500 JPY 出示護照辦理。', '購物提示：對面松本清補齊家庭常備藥；藥品以透明密封袋封裝，離境前不可拆封。', '彈性備案：若體力極佳，可搭半藏門線 3 分鐘至錦糸町逛全東京最大 DAISO 旗艦館（Arcakit 7F，最晚 20:15 入館）；若想休息則留在晴空塔，對面松本清補齊常備藥即回房打包。'], photo: '在飯店街角或陽台，抬頭將整座打著璀璨亮燈的晴空塔與家人一同框入合影。' }
+      ]
+    },
+    {
+      day: 6, date: '2027-02-03', weekday: '三',
+      title: '晴空塔晨光、京成特急直達成田機場、免稅店最後衝刺與溫暖歸途',
+      highlight: '悠閒晨食 ＆ 大打包 ➔ 十間橋逆晴空塔 ➔ 商場最後午餐 ➔ 京成 Access 特急直達成田 ➔ 免稅店最後衝刺 ➔ 溫暖返抵台中親家M3',
+      weather: '東京約 3–11°C；回到台灣約 15–21°C。厚外套手提上機，落地前換輕便衣物。（出發前請查最新預報）',
+      pass: '押上站搭乘「京成 Access 特急（アクセス特急）」一線直達成田機場（約 50 分鐘，全家約 4,760 JPY），直接刷 Suica / PASMO 或購票進站；上午市區皆步行。',
+      lastTrain: '13:50 搭乘京成 Access 特急（車程約 50 分），預計 14:45 抵達航廈（起飛前 3 小時），17:45 起飛。',
+      items: [
+        { time: '08:30–09:40 (JST)', title: '【早餐】KOKO 客廳悠閒晨食 ＆ 大打包', cat: '美食', cost: '已採買', transport: '飯店客廳自理', hours: '-', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr,
+          notes: [
+            '打包重點：將 Workman、運動鞋、UNIQLO、藥妝、N.Y.C. SAND 餅乾、二手戰利品平整封箱。',
+            '購物與打包提示：所有在市區免稅店購買且被密封於「免稅專用透明袋」內的消耗品（藥妝、食品）嚴禁拆封，必須完整托運；隨身行李請預留 1～2 個折疊旅行袋，以便下午在成田機場免稅店購買之伴手禮集中提上飛機。'
+          ], photo: '客廳拍全家行李箱與戰利品並排的「戰利品打包大滿貫」紀念照。' },
+        { time: '09:40–10:00 (JST)', title: '退房 ＆ 櫃檯寄放大行李', cat: '住宿', cost: '住宿已結清', transport: '飯店 1F 大廳', hours: '10:00 前退房', q: HOTEL.q, ja: HOTEL.ja, addr: HOTEL.addr, web: HOTEL.web,
+          notes: ['動線重點：退房後大件行李免費寄放飯店櫃檯，輕裝出門漫步最後的押上街景。'], photo: '退房時在大門玄關處以飯店標誌為景拍全家輕裝合照，記錄在押上 5 個美好的夜晚。' },
+        { time: '10:00–12:00 (JST)', title: '十間橋散策 ＆ 晴空塔最後巡禮', cat: '購物', cost: '購物自理', transport: '步行約 3～5 分', hours: '商場多數店舖 10:00 營業', q: '十間橋', ja: '十間橋', addr: '東京都墨田区業平1丁目', web: 'https://www.tokyo-skytree.jp/cn_t/',
+          notes: [
+            '採買：THE SKYTREE SHOP (1F) 買晴空塔限定金屬吊飾紀念品；若 3COINS 還有想補買的小物可在此時最後補單。',
+            '購物提示：THE SKYTREE SHOP (1F) 的晴空塔限定文具與明信片設有專用郵筒，可在店內買好特製郵票蓋上紀念郵戳直接投遞寄回台灣。'
+          ], photo: '十間橋用 0.5x 超廣角仰拍水面「逆晴空塔倒影」與真實塔身垂直相映的全家福。' },
+        { time: '12:05–13:15 (JST)', title: '【午餐】晴空塔商場最後饗宴（現場 3 選 1）', cat: '美食', cost: '約 3,500–7,500 JPY（控制在 8,000 內）', transport: '晴空街道 Solamachi 內', hours: '11:00 營業', q: 'Tokyo Solamachi', ja: '東京ソラマチ', addr: SOLAMACHI_ADDR, web: 'https://www.tokyo-solamachi.jp/',
+          options: [
+            { name: '首選 A：利久牛舌（Solamachi 6F）', detail: '炭烤厚切牛舌定食、熱牛尾湯配麥飯（約 7,500 JPY）。', q: '牛たん炭焼 利久 東京スカイツリータウン・ソラマチ店' },
+            { name: '首選 B：宮武讚岐烏龍麵（Solamachi 3F）', detail: '清爽柴魚高湯配現炸天婦羅（約 3,800 JPY）。', q: '宮武讃岐うどん 東京スカイツリータウン・ソラマチ店' },
+            { name: '首選 C：洋食 滿天星（Solamachi 6F）', detail: '多蜜醬漢堡排配蛋包飯（約 7,200 JPY）。', q: '洋食 満天星 東京スカイツリータウン・ソラマチ店' }
+          ], notes: ['用餐重點：商場內舒適享用登機前最後一頓正餐，從容不趕時間。'], photo: '用 2x 模式俯拍牛舌炭烤切面或滑蛋淋醬特寫，捕捉開動前舉杯祝賀旅程順利的歡樂合影。' },
+        { time: '13:20–13:45 (JST)', title: '回飯店取行李 ➔ 押上站無障礙月台', cat: '交通', cost: '-', transport: '步行 3 分＋無障礙電梯直通月台', hours: '-', q: 'Oshiage Station', ja: '押上駅（スカイツリー前）', addr: '東京都墨田区押上1-1-65', web: 'https://www.keisei.co.jp/',
+          notes: [
+            '無障礙動線：回 KOKO HOTEL 領取寄放行李、上洗手間，推著行李箱經晴空塔直通電梯直達「押上站地下月台」，全平路免扛行李。',
+            '購票/乘車：刷 Suica / PASMO 直接進站（或於自動售票機買票），前往成田機場方向月台候車。'
+          ] },
+        { time: '13:50–14:45 (JST)', title: '押上站 ➔ 成田國際機場（京成 Access 特急）', cat: '交通', cost: '約 4,760 JPY / 全家（約 1,190 JPY/人）', transport: '京成 Access 特急（アクセス特急，直達成田第 1 / 第 2 航廈）', hours: '車程約 50 分鐘', q: 'Narita International Airport', ja: '成田国際空港', addr: '千葉県成田市古込1-1', web: 'https://www.keisei.co.jp/',
+          notes: [
+            '一線到底免轉車：從押上站搭上「京成 Access 特急」後一路直達成田機場航廈地下月台，免換線、免受高速公路塞車干擾，時間精準穩定！',
+            '抵達時間：預計 14:45 抵達，精準卡位班機起飛前 3 小時抵達機場出境大廳！'
+          ], photo: '在電車車廂內抓拍全家推著大行李箱啟程往機場的旅行紀實照。' },
+        { time: '14:50–16:00 (JST)', title: '成田機場報到、托運行李 ＆ 出境審查', cat: '機場', cost: '-', transport: '航廈航空公司櫃檯', hours: '航班起飛前 3 小時開放', q: 'Narita International Airport', ja: '成田国際空港', addr: '千葉県成田市古込1-1', web: 'https://www.narita-airport.jp/',
+          notes: ['大行李箱全數託運進輸送帶，通過安檢與通關審查。'], photo: '報到櫃檯前推著滿載戰利品的行李箱大合照；手持機票與航班螢幕合影。' },
+        { time: '16:00–17:30 (JST)', title: '★ 成田機場管制區免稅店熱門名產採買 ＆ 候機', cat: '購物', cost: '購物自理', transport: '航廈出境管制區內免稅店', hours: '依航班時段營業', q: 'Narita Airport Duty Free', ja: '成田国際空港 免税店', addr: '千葉県成田市古込1-1', web: 'https://www.narita-airport.jp/',
+          options: [
+            { name: 'NEWYORK PERFECT CHEESE', detail: '起司奶油脆餅（若市區沒買到，機場免稅店有最後配額！）。', q: 'Narita Airport Duty Free' },
+            { name: '白色戀人', detail: '白巧克力夾心薄餅，經典必備。', q: 'Narita Airport Duty Free' },
+            { name: "ROYCE' 生巧克力", detail: '原味牛奶、香檳口味，保存期限短且需冷藏（10°C 以下），購買時請主動加購原廠鋁箔保冷袋與乾冰（約 100～150 JPY），可維持 6～8 小時低溫直至返抵親家M3 家中冷藏。', q: 'Narita Airport Duty Free' },
+            { name: '薯條三兄弟（Jagapokkuru）', detail: '北海道名物香脆馬鈴薯條。', q: 'Narita Airport Duty Free' },
+            { name: 'YOKU MOKU ／ 東京牛奶起司工房', detail: '原味雪茄蛋捲、海鹽起司夾心餅乾。', q: 'Narita Airport Duty Free' },
+            { name: '日本頂級名酒', detail: '獺祭二割三分純米大吟釀、日本威士忌（白州 / 山崎，若有配額）。由店員封入專用安全防篡改袋（STEBs）後可直接作為隨身手提行李帶上飛機，無需辦理託運（返台出關需遵守每人 1 公升免稅額度）。', q: 'Narita Airport Duty Free' }
+          ], notes: [
+            '支付提示：機場免稅店全面支援全額刷卡或「現金＋信用卡混刷」（將手邊剩餘零散日圓硬幣與現鈔全部用完，不足額再補刷信用卡）。',
+            '必吃：免稅區內買熱咖啡或辻利抹茶拿鐵作為登機前點心。'
+          ], photo: '落地窗前以客機為背景拍候機合影。' },
+        { time: '17:45–20:55', title: '成田機場 (NRT) 起飛 ➔ 台灣桃園國際機場 (TPE)', cat: '機場', cost: '機票已付清', transport: '國際航班客機（飛行約 4 小時 10 分）', hours: '預計 17:45 起飛', q: 'Taiwan Taoyuan International Airport', ja: '台灣桃園國際機場', addr: '桃園市大園區航站南路9號', web: 'https://www.taoyuan-airport.com/',
+          notes: ['航程享受：享用機上餐、觀賞電影，安穩休息回顧 6 天行程（時差 1 小時，抵台為 20:55 TST）。'], photo: '巡航平飛後，透過機窗拍攝窗外的日落晚霞或東京陸地璀璨夜光。' },
+        { time: '20:55–21:50 (TST)', title: '抵達台灣桃園國際機場 ＆ 提領行李', cat: '機場', cost: '-', transport: '航廈入境大廳', hours: '-', q: 'Taiwan Taoyuan International Airport', ja: '台灣桃園國際機場', addr: '桃園市大園區航站南路9號', web: 'https://www.taoyuan-airport.com/',
+          notes: ['入境流程：快速通關、提領託運行李、過海關申報，前往專車會合點。'], photo: '在入境迎賓大廳標誌前拍下「平安抵台」全家合照，為這趟旅程畫下完美句點。' },
+        { time: '21:55–23:40 (TST)', title: '台灣桃園國際機場 ➔ 親家M3 溫暖的家', cat: '交通', cost: '約 NT$ 1,800', transport: '預約接送專車 / 自駕（車程約 1 小時 45 分）', hours: '-', q: 'Taiwan Taoyuan International Airport', ja: '台灣桃園國際機場', addr: '桃園市大園區航站南路9號', web: 'https://www.taoyuan-airport.com/',
+          notes: ['平安返家：專車直達台中親家M3 社區門口，卸下戰利品，圓滿完成 6 天 5 夜富士山東京深度之旅！'] }
+      ]
+    }
+  ];
+
+  /* 預約憑證（編號與電話為手動填寫，存本機） */
+  const VOUCHERS_DATA = [
+    { id: 'v1', title: 'KOKO HOTEL Residence Tokyo Oshiage', type: '住宿', when: '01/29 入住 15:00–22:00 ～ 02/03 退房 10:00 前', link: 'https://www.koko-hotels.com/tokyo_oshiage/', linkLabel: '官方網站', phone: '03-5608-8560', note: '5 晚連住，4 位同行；已結清。' },
+    { id: 'v2', title: '成田機場 ➔ 飯店 專屬接機', type: '接送', when: '01/29 約 17:50 成田出發', link: 'https://www.narita-airport.jp/', linkLabel: '成田機場官網', note: '司機舉牌接機，專車直達飯店門口。確認航班與司機聯絡方式。' },
+    { id: 'v3', title: '富士山河口湖 10 小時專屬包車', type: '包車', when: '01/30 07:30 飯店大廳集合', link: '', linkLabel: '', note: '全日約 60,000 JPY；確認含過路費、停車費、燃油與超時費規則。16:00 準時返程。' },
+    { id: 'v4', title: '陽光水族館 電子票', type: '門票', when: '01/31 14:30 入場', link: 'https://sunshinecity.jp/aquarium/', linkLabel: '官方網站', note: '出發前 2 週購買指定時段票，掃碼入館。' },
+    { id: 'v5', title: '敘敘苑 晴空街道 30F 午餐', type: '餐廳', when: '02/02 12:30', link: 'https://www.jojoen.co.jp/', linkLabel: '官方網站／預約', note: '用餐前 1 個月（2027/01/02）開放預約，指定高空景觀席。' },
+    { id: 'v6', title: '東京晴空塔 天望甲板 電子票', type: '門票', when: '02/02 16:45 入場', link: 'https://www.tokyo-skytree.jp/cn_t/', linkLabel: '官方網站／購票', note: '出發前 2 週預約，搶 17:05 日落時段。' },
+    { id: 'v7', title: '押上站 ➔ 成田機場 京成 Access 特急', type: '交通', when: '02/03 13:50 押上站出發', link: 'https://www.keisei.co.jp/', linkLabel: '京成電鐵官網', note: '一線直達成田機場免換車（車程約 50 分，全家約 4,760 JPY），直接刷 Suica / PASMO 或購票進站。' }
+  ];
+
+  /* 行前待辦與行李詳細清單 */
+  const PACKING_DATA = [
+    { cat: '📅 出發前關鍵預約與待辦清單（Timeline Checklist）', items: [
+      ['t1', '出發前 3–6 個月：確認 4 人中華民國護照效期（需在 2027 年 8 月以上）'],
+      ['t2', '2026/11–12：預約台灣桃園國際機場往返接送 ＆ 成田國際機場（Day 1）專屬接機車輛（Day 6 回程由押上站搭京成 Access 特急直達）'],
+      ['t3', '2026/11–12：預訂 2027/01/30（Day 2）富士山河口湖 10 小時專屬包車'],
+      ['t4', '2027/01/02（用餐前 1 個月）：於敘敘苑官網預訂 02/02（Day 5）12:30 晴空街道 30F 高空商業午餐席位'],
+      ['t5', '2027/01/15 前後（出發前 2 週）：上網購買陽光水族館（Day 3，預約 14:30 入場）電子票'],
+      ['t6', '2027/01/15 前後（出發前 2 週）：購買東京晴空塔天望甲板（Day 5，預約 16:45 入場）電子票'],
+      ['t7', '出發前 3 天：填寫 Visit Japan Web（VJW）入境審查與海關申報，完成 4 人 QR Code 截圖備用'],
+      ['t8', '出發前 2 天：投保全家 4 人旅遊平安險＋海外突發疾病醫療險＋旅遊不便險'],
+      ['t9', '出發前 1 天：向接機與包車司機再次確認車號、舉牌名稱與聯絡方式'] ] },
+    { cat: '🪪 重要證件與金融支付（全家 4 人份）', items: [
+      ['d1', '中華民國護照正本 4 本（Jerry、Meien、Yunxin、Chenan）'],
+      ['d2', '護照資料頁紙本影本 4 份 ＆ 2 吋大頭照各 2 張（與正本分開收納，防遺失備用）'],
+      ['d3', 'Visit Japan Web 入境＆海關 QR Code 手機截圖（離線相簿亦存一份）'],
+      ['d4', '實體交通 IC 卡 4 張（Suica / PASMO，含兒童記名卡）'],
+      ['d5', '日圓現金（建議分袋收納：萬元大鈔＋千元鈔與零錢包）'],
+      ['d6', '海外高回饋信用卡 2–3 張（JCB / Visa / Mastercard，確認開通海外刷卡與 PIN 碼）'],
+      ['d7', '電子機票行程單、KOKO HOTEL 住宿確認單、包車與接送機訂單截圖'],
+      ['d8', '海外旅遊平安險保單號碼與 24 小時海外急難救助專線卡'],
+      ['d9', '新台幣現金少許＆國內身分證／健保卡（返台交通與備查）']] },
+    { cat: '🔌 3C 電器與充電通訊設備', items: [
+      ['e1', '智慧型手機 4 支（確認漫遊關閉或設定妥當）'],
+      ['e2', '日本上網 eSIM QR Code 或實體 SIM 卡（附退卡針與收納盒）'],
+      ['e3', '行動電源 2–3 顆（必須隨身手提上機、嚴禁託運，確認標示 Wh 容量）'],
+      ['e4', '多孔快充充電頭（建議 GaN 氮化鎵 65W 以上，一次充手機與行動電源）'],
+      ['e5', 'Type-C ／ Lightning 充電線多條（客廳、床頭與隨身包各備一條）'],
+      ['e6', 'Apple Watch ／ 智慧手錶充電線、藍牙耳機'],
+      ['e7', '手提行李電子秤（Day 6 打包戰利品確認託運重量必備）']] },
+    { cat: '🧥 1–2 月東京＆富士山禦寒衣物（洋蔥式穿搭）', items: [
+      ['c1', '防風防潑水保暖羽絨外套／厚大衣（每人 1 件，機上手提穿脫）'],
+      ['c2', '發熱衣＆發熱內搭褲（每人 3–5 套，含極暖款供 Day 2 河口湖使用）'],
+      ['c3', '中層保暖上衣（刷毛大學 T、針織毛衣、抓絨外套或輕羽絨背心）'],
+      ['c4', '防風保暖長褲／內刷毛長褲（每人 3–4 件）'],
+      ['c5', '換洗內衣褲（5–6 天份，公寓式飯店附洗衣機可彈性清洗）'],
+      ['c6', '保暖厚襪／美麗諾羊毛襪（每人 5–6 雙，避免腳底冰冷）'],
+      ['c7', '毛帽／遮耳保暖帽（河口湖湖畔與晴空塔、鐵塔展望台強風必備）'],
+      ['c8', '防風觸控手套＆保暖圍巾／脖圍（拍照滑手機免脫手套）'],
+      ['c9', '防滑好走的健走鞋／防水運動鞋（新倉山淺間公園石階、明治神宮碎石路必備）'],
+      ['c10', '飯店舒適居家服／睡衣（商場暖氣強、回房放鬆穿）']] },
+    { cat: '💊 全家常備藥品與兒童備用藥', items: [
+      ['m1', '個人每日固定處方藥／保健品（多備 3 天份並隨身攜帶）'],
+      ['m2', '兒童專用退燒藥水、退燒塞劑、兒童感冒藥粉與止咳藥（Chenan 備用）'],
+      ['m3', '成人綜合感冒藥、止痛退燒藥（如普拿疼、EVE）'],
+      ['m4', '腸胃藥、止瀉藥、整腸錠、胃乳片（大啖和牛、壽司、拉麵必備）'],
+      ['m5', '暈車藥（大人＆兒童款，Day 2 富士山包車長途必備）'],
+      ['m6', '抗組織胺過敏藥、止癢軟膏、眼藥水'],
+      ['m7', 'OK 繃、防水透氣敷料、小護士外傷軟膏、獨立包裝酒精棉片'],
+      ['m8', '耳溫槍／電子體溫計、大人＆兒童立體口罩（機艙與地鐵防乾防寒）']] },
+    { cat: '🧴 冬季極乾保濕盥洗與個人護理', items: [
+      ['p1', '高保濕身體乳液／乳霜（日本 1–2 月室內暖氣極度乾燥，每日必擦）'],
+      ['p2', '隨身護唇膏＆護手霜（每人隨身包各放 1 支，防乾裂靜電）'],
+      ['p3', '牙刷、牙膏、牙線棒（響應日本環保減塑，自備最習慣）'],
+      ['p4', '洗面乳、卸妝油／卸妝棉、臉部保濕化妝水與精華乳霜'],
+      ['p5', '隱形眼鏡（日拋多備 2 副）、備用眼鏡、太陽眼鏡（河口湖雪地防眩光）'],
+      ['p6', '防曬隔離乳（高山雪地反射紫外線）、摺疊梳、髮圈、指甲刀、棉花棒'],
+      ['p7', '隨身袖珍面紙、純水濕紙巾、乾洗手噴霧（液體單瓶 ≤100ml 裝透明夾鏈袋）']] },
+    { cat: '🛍️ 隨身包、採買收納與公寓客廳實用好物', items: [
+      ['b1', '隨身防盜小包／斜背包（裝護照、錢包、手機，結帳退稅好拿取）'],
+      ['b2', '每日出遊輕便後背包（裝保溫瓶、圍巾手套、行動電源與相機）'],
+      ['b3', '輕量保溫瓶 1–2 支（隨時補充溫熱水暖身）'],
+      ['b4', '手握式＆貼式暖暖包（Day 2 清晨新倉山與河口湖禦寒必備）'],
+      ['b5', '大容量可摺疊旅行袋／行李箱擴充袋（裝 Workman 外套、運動鞋、寶可夢戰利品）'],
+      ['b6', '衣物壓縮收納袋／真空袋（羽絨外套與戰利品裝箱省空間）'],
+      ['b7', '環保購物袋 3–4 個（LIFE 超市買草莓和牛、百元店採買免買塑膠袋）'],
+      ['b8', '厚款夾鏈袋＆保鮮盒／袋（裝吃不完的草莓、餅乾、免稅收據與零錢）'],
+      ['b9', '晴雨兩用輕量摺疊傘、原子筆 1 支（機上填表或明信片書寫）']] }
+  ];
+
+  const PHRASE_CATEGORIES = [
+    { id: 'dining', icon: '🍽️', short: '餐廳', label: '🍽️ 餐廳用餐' },
+    { id: 'shopping', icon: '🛍️', short: '購物', label: '🛍️ 購物退稅' },
+    { id: 'transit', icon: '🏨', short: '交通', label: '🏨 飯店交通' },
+    { id: 'photo', icon: '📸', short: '拍照', label: '📸 拍照參拜' },
+    { id: 'sos', icon: '🚨', short: '求助', label: '🚨 就醫求助' }
+  ];
+
+  const PHRASE_CARDS_DATA = [
+    /* 🍽️ 餐廳用餐（8 句） */
+    { cat: 'dining', catName: '🍽️ 餐廳用餐', tag: '4 人入座（3 大 1 小）', ja: 'すみません、大人3名、子供1名です。', ro: 'Sumimasen, otona san-mei, kodomo ichi-mei desu.', zh: '不好意思，我們有 3 位大人、1 位小孩（共 4 人）。' },
+    { cat: 'dining', catName: '🍽️ 餐廳用餐', tag: '索取兒童餐具與分食小碗', ja: '子供用の食器と取り皿をいただけますか？', ro: 'Kodomoyō no shokki to torizara wo itadakemasu ka?', zh: '請問可以給我們兒童餐具和分食小盤子嗎？' },
+    { cat: 'dining', catName: '🍽️ 餐廳用餐', tag: '詢問中文／英文菜單', ja: '中国語か英語のメニューはありますか？', ro: 'Chūgokugo ka Eigo no menyū wa arimasu ka?', zh: '請問有中文或英文菜單嗎？' },
+    { cat: 'dining', catName: '🍽️ 餐廳用餐', tag: '手指點餐＆詢問招牌推薦', ja: 'これをお願いします。おすすめはどれですか？', ro: 'Kore wo onegaishimasu. Osusume wa dore desu ka?', zh: '請給我這個。請問店裡的招牌推薦是哪一道？' },
+    { cat: 'dining', catName: '🍽️ 餐廳用餐', tag: '客製調整（不加蔥／烤熟）', ja: 'ネギ抜きでお願いします。よく焼いてください。', ro: 'Negi-nuki de onegaishimasu. Yoku yaite kudasai.', zh: '請不要加蔥；肉品請幫我們烤熟一點。' },
+    { cat: 'dining', catName: '🍽️ 餐廳用餐', tag: '索取冰水／溫熱水', ja: 'すみません、お水とお湯をください。', ro: 'Sumimasen, omizu to oyu wo kudasai.', zh: '不好意思，請給我冰水和溫熱水。' },
+    { cat: 'dining', catName: '🍽️ 餐廳用餐', tag: '結帳買單', ja: 'すみません、お会計をお願いします。', ro: 'Sumimasen, okaikei wo onegaishimasu.', zh: '不好意思，麻煩幫我們結帳買單。' },
+    { cat: 'dining', catName: '🍽️ 餐廳用餐', tag: '詢問信用卡／Suica 支付', ja: 'クレジットカード（Suica）で払えますか？', ro: 'Kurejitto kādo (Suika) de haraemasu ka?', zh: '請問可以用信用卡（或 Suica 交通卡）付款嗎？' },
+
+    /* 🛍️ 購物退稅（8 句） */
+    { cat: 'shopping', catName: '🛍️ 購物退稅', tag: '辦理免稅手續（Tax-Free）', ja: '免税（Tax-Free）の手続きをお願いします。', ro: 'Menzei (Tax-Free) no tetsuzuki wo onegaishimasu.', zh: '麻煩幫我辦理免稅手續（出示全家護照正本）。' },
+    { cat: 'shopping', catName: '🛍️ 購物退稅', tag: '詢問全新庫存／其他尺寸', ja: 'これの新しい在庫（別のサイズ）はありますか？', ro: 'Kore no atarashii zaiko (betsu no saizu) wa arimasu ka?', zh: '請問這個有全新的庫存（或其他尺寸）嗎？' },
+    { cat: 'shopping', catName: '🛍️ 購物退稅', tag: '詢問試穿（服飾／運動鞋）', ja: 'すみません、試着してもいいですか？', ro: 'Sumimasen, shichaku shitemo ii desu ka?', zh: '不好意思，請問這件（雙）可以試穿嗎？' },
+    { cat: 'shopping', catName: '🛍️ 購物退稅', tag: '易碎品防撞包裝（碗盤／陶罐）', ja: '割れ物なので、緩衝材で包んでいただけますか？', ro: 'Waremono nanode, kanshōzai de tsutsunde itadakemasu ka?', zh: '因為是易碎品，請問可以幫我用氣泡紙（防撞材）包起來嗎？' },
+    { cat: 'shopping', catName: '🛍️ 購物退稅', tag: '加購保冷袋（ROYCE 生巧克力）', ja: '保冷バッグと保冷剤をつけてください。', ro: 'Horei baggu to horeizai wo tsukete kudasai.', zh: '請幫我加購保冷袋與保冷劑（乾冰）。' },
+    { cat: 'shopping', catName: '🛍️ 購物退稅', tag: '索取送禮分裝提袋（伴手禮）', ja: 'お土産用なので、小分けの袋をいただけますか？', ro: 'Omiyage-yō nanode, kowake no fukuro wo itadakemasu ka?', zh: '因為是要送人的伴手禮，請問可以多給幾個分裝紙袋嗎？' },
+    { cat: 'shopping', catName: '🛍️ 購物退稅', tag: '免稅封袋與現用品分開裝', ja: 'すぐに使うものと免税品を分けて入れてください。', ro: 'Sugu ni tsukau mono to menzeihin wo wakete irete kudasai.', zh: '請幫我把「日本境內馬上要用的」和「免稅封袋商品」分開結帳／分裝。' },
+    { cat: 'shopping', catName: '🛍️ 購物退稅', tag: '機場免稅店：現金＋刷卡混付', ja: '現金を全部使って、残りはカードで払えますか？', ro: 'Genkin wo zenbu tsukatte, nokori wa kādo de haraemasu ka?', zh: '請問可以先把日圓現金用完，不足的餘額再刷信用卡嗎？' },
+
+    /* 🏨 飯店交通（7 句） */
+    { cat: 'transit', catName: '🏨 飯店交通', tag: 'KOKO HOTEL 辦理入住', ja: 'チェックインをお願いします。予約した李（リー）です。', ro: 'Chekku-in wo onegaishimasu. Yoyaku shita Rī desu.', zh: '我要辦理入住，我是預約的李（LI, YAN-HUEI）。' },
+    { cat: 'transit', catName: '🏨 飯店交通', tag: 'Day 6 退房後寄放大行李', ja: 'チェックアウト後に、荷物を預かっていただけますか？', ro: 'Chekku-auto go ni, nimotsu wo azukatte itadakemasu ka?', zh: '請問退房後可以幫我們暫時寄放大件行李嗎？（13:20 回來領）' },
+    { cat: 'transit', catName: '🏨 飯店交通', tag: 'Day 6 領回寄放的行李', ja: '預けた荷物を受け取りたいです。お願いします。', ro: 'Azuketa nimotsu wo uketoritai desu. Onegaishimasu.', zh: '我想要領回剛才寄放的行李，麻煩您了。' },
+    { cat: 'transit', catName: '🏨 飯店交通', tag: '押上站：詢問京成 Access 特急月台', ja: '成田空港行きの「アクセス特急」は何番線ですか？', ro: 'Narita-kūkō yuki no "Akusesu Tokkyū" wa nan-bansen desu ka?', zh: '請問開往成田機場的「京成 Access 特急」在第幾月台？' },
+    { cat: 'transit', catName: '🏨 飯店交通', tag: '推大行李箱：詢問無障礙電梯', ja: 'ホームへ行くエレベーターはどこですか？', ro: 'Hōmu e iku erebētā wa doko desu ka?', zh: '請問通往月台的無障礙電梯在哪裡？' },
+    { cat: 'transit', catName: '🏨 飯店交通', tag: 'Suica / PASMO 交通卡加值', ja: 'Suicaにチャージしたいです。', ro: 'Suika ni chāji shitai desu.', zh: '我想要幫 Suica 交通卡儲值。' },
+    { cat: 'transit', catName: '🏨 飯店交通', tag: '詢問洗手間位置', ja: 'すみません、お手洗い（トイレ）はどこですか？', ro: 'Sumimasen, otearai (toire) wa doko desu ka?', zh: '不好意思，請問洗手間在哪裡？' },
+
+    /* 📸 拍照參拜（5 句） */
+    { cat: 'photo', catName: '📸 拍照參拜', tag: '請路人幫忙拍全家福', ja: 'すみません、家族の写真を撮っていただけますか？', ro: 'Sumimasen, kazoku no shashin wo totte itadakemasu ka?', zh: '不好意思，請問可以幫我們拍張全家福合照嗎？' },
+    { cat: 'photo', catName: '📸 拍照參拜', tag: '指示按下快門＆道謝', ja: 'ここを押してください。ありがとうございます！', ro: 'Koko wo oshite kudasai. Arigatō gozaimasu!', zh: '請按這個按鈕即可，非常謝謝您！' },
+    { cat: 'photo', catName: '📸 拍照參拜', tag: '詢問店內是否可拍照', ja: 'すみません、ここで写真を撮ってもいいですか？', ro: 'Sumimasen, koko de shashin wo tottemo ii desu ka?', zh: '不好意思，請問這裡可以拍照嗎？' },
+    { cat: 'photo', catName: '📸 拍照參拜', tag: '神社購買御守／節分福豆', ja: 'このお守りと節分の福豆をください。', ro: 'Kono omamori to setsubun no fukumame wo kudasai.', zh: '請給我這個御守與節分開運福豆。' },
+    { cat: 'photo', catName: '📸 拍照參拜', tag: '晴空塔寄明信片回台灣', ja: '台湾までの切手をください。スタンプはどこですか？', ro: 'Taiwan made no kitte wo kudasai. Sutanpu wa doko desu ka?', zh: '請給我寄到台灣的郵票，請問紀念郵戳在哪裡蓋？' },
+
+    /* 🚨 就醫求助（5 句） */
+    { cat: 'sos', catName: '🚨 就醫求助', tag: '發燒不適求助', ja: 'すみません、熱があります。', ro: 'Sumimasen, netsu ga arimasu.', zh: '不好意思，我發燒了。' },
+    { cat: 'sos', catName: '🚨 就醫求助', tag: '兒童身體不適', ja: '子供の具合が悪いです。病院はどこですか？', ro: 'Kodomo no guai ga warui desu. Byōin wa doko desu ka?', zh: '孩子身體不舒服，請問附近哪裡有醫院／診所？' },
+    { cat: 'sos', catName: '🚨 就醫求助', tag: '緊急呼叫救護車', ja: '救急車を呼んでください。', ro: 'Kyūkyūsha wo yonde kudasai.', zh: '請幫我叫救護車。' },
+    { cat: 'sos', catName: '🚨 就醫求助', tag: '護照遺失報案', ja: 'パスポートをなくしました。交番はどこですか？', ro: 'Pasupōto wo nakushimashita. Kōban wa doko desu ka?', zh: '我護照遺失了，請問最近的派出所（交番）在哪裡？' },
+    { cat: 'sos', catName: '🚨 就醫求助', tag: '藥妝店詢問指定藥品', ja: 'すみません、この薬はありますか？', ro: 'Sumimasen, kono kusuri wa arimasu ka?', zh: '不好意思，請問有這種藥嗎？（出示手機照片）' }
+  ];
+  const PHRASES = PHRASE_CARDS_DATA.map((p) => [p.ja, p.zh]);
+
+  const PEOPLE = ['Jerry', 'Meien', 'Yunxin', 'Chenan', '公費'];
+  const SPLIT_N = 4;
+
+  /* =====================================================================
+     工具函式
+     ===================================================================== */
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const enc = encodeURIComponent;
+  const isMobileView = () => window.matchMedia('(max-width: 767px)').matches;
+  const shortText = (s, max = 20) => {
+    const str = String(s ?? '').trim();
+    return str.length > max ? str.slice(0, max) + '…' : str;
+  };
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { toast('儲存空間不足或被瀏覽器禁止'); } }
+  };
+  const mapPlace = (q) => `https://www.google.com/maps/search/?api=1&query=${enc(q)}`;
+  const mapNav = (q) => `https://www.google.com/maps/dir/?api=1&destination=${enc(q)}&travelmode=transit`;
+  const mapNavDrive = (q) => `https://www.google.com/maps/dir/?api=1&destination=${enc(q)}`;
+  const searchWeb = (q) => `https://www.google.com/search?q=${enc(q + ' 官方網站')}`;
+  const b64enc = (str) => { const bytes = new TextEncoder().encode(str); let bin = ''; bytes.forEach((b) => { bin += String.fromCharCode(b); }); return btoa(bin); };
+  const b64dec = (b64) => { const bin = atob(b64); const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0)); return new TextDecoder().decode(bytes); };
+
+  let toastTimer;
+  function toast(msg) {
+    const el = $('toast');
+    el.textContent = msg;
+    el.style.opacity = '1';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { el.style.opacity = '0'; }, 2200);
+  }
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); toast('已複製'); }
+    catch {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); toast('已複製'); } catch { toast('複製失敗，請手動選取'); }
+      ta.remove();
+    }
+  }
+  const icons = () => { if (window.lucide) window.lucide.createIcons(); };
+
+  /* =====================================================================
+     狀態（手機版預設摺疊詳細敘述，只呈現核心重點；電腦版預設展開）
+     ===================================================================== */
+  const state = {
+    day: 1,
+    allOpen: !isMobileView(),
+    summaryOpen: !isMobileView(),
+    openMap: {},
+    packAllOpen: !isMobileView(),
+    packOpenMap: { 0: true },
+    voucherNoteOpen: {},
+    rate: store.get('tf_rate', 0.21),
+    expenses: store.get('tf_expenses', []),
+    packing: store.get('tf_packing', {}),
+    vouchers: store.get('tf_vouchers', {}),
+    ins: store.get('tf_ins', { name: '', phone: '' }),
+    weather: store.get('tf_weather', null)
+  };
+
+  /* =====================================================================
+     語音發音（Web Speech API：支援日語 ja-JP 與繁體中文 zh-TW）
+     ===================================================================== */
+  function speakText(text, lang = 'ja-JP', onStateChange) {
+    if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+      toast('此裝置或瀏覽器不支援語音發音');
+      return;
+    }
+    const synth = window.speechSynthesis;
+    if (synth.speaking) {
+      synth.cancel();
+      if (onStateChange) onStateChange(false);
+      return;
+    }
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = lang;
+    utter.rate = 0.92;
+    utter.pitch = 1.05;
+    const voices = synth.getVoices ? synth.getVoices() : [];
+    const match = voices.find((v) => v.lang && v.lang.toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()));
+    if (match) utter.voice = match;
+    utter.onstart = () => { if (onStateChange) onStateChange(true); };
+    utter.onend = () => { if (onStateChange) onStateChange(false); };
+    utter.onerror = () => { if (onStateChange) onStateChange(false); };
+    synth.speak(utter);
+    if (onStateChange) onStateChange(true);
+  }
+
+  /* =====================================================================
+     智慧今日判定與倒數
+     ===================================================================== */
+  function localDateStr() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }
+  const dayDiff = (a, b) => Math.round((Date.parse(a + 'T00:00:00Z') - Date.parse(b + 'T00:00:00Z')) / 86400000);
+  let todayDay = null;
+  function initSmartToday() {
+    const today = localDateStr();
+    const first = ITINERARY_DATA[0].date;
+    const last = ITINERARY_DATA[ITINERARY_DATA.length - 1].date;
+    const found = ITINERARY_DATA.find((d) => d.date === today);
+    if (found) {
+      todayDay = found.day; state.day = found.day;
+      $('countdownText').textContent = `🎒 旅行進行中・今天是第 ${found.day} 天`;
+      $('jumpTodayBtn').textContent = '看今日';
+    } else if (today < first) {
+      $('countdownText').textContent = `🎒 距離出發還有 ${dayDiff(first, today)} 天（01/29）`;
+      $('jumpTodayBtn').textContent = '看第 1 天';
+    } else if (today > last) {
+      $('countdownText').textContent = '✨ 旅程已結束，歡迎回味行程';
+      $('jumpTodayBtn').textContent = '看第 1 天';
+    }
+  }
+
+  /* =====================================================================
+     行程渲染（手機版只給重點，詳細敘述使用摺疊功能）
+     ===================================================================== */
+  const CAT_STYLE = {
+    '美食': 'bg-rose-100 text-rose-700 border border-rose-200',
+    '景點': 'bg-sky-100 text-sky-700 border border-sky-200',
+    '購物': 'bg-amber-100 text-amber-800 border border-amber-200',
+    '住宿': 'bg-violet-100 text-violet-700 border border-violet-200',
+    '交通': 'bg-emerald-100 text-emerald-700 border border-emerald-200',
+    '機場': 'bg-slate-100 text-slate-700 border border-slate-200'
+  };
+
+  function renderDaySelector() {
+    $('daySelector').innerHTML = ITINERARY_DATA.map((d) => {
+      const on = d.day === state.day;
+      return `<button type="button" role="tab" aria-selected="${on}" data-day="${d.day}" class="dayBtn tap px-2 py-2 md:px-3 md:py-2.5 rounded-2xl border-2 text-center shadow-sm transition-all ${on ? 'bg-vermilion text-white border-vermilion' : 'bg-white text-ink border-line hover:bg-cream'}">
+        <span class="block text-sm md:text-base font-black leading-tight">第 ${d.day} 天${d.day === todayDay ? '★' : ''}</span>
+        <span class="block text-xs md:text-sm font-bold opacity-90 mt-0.5">${d.date.slice(5).replace('-', '/')} (${d.weekday})</span></button>`;
+    }).join('');
+  }
+
+  function linkBtns(q, web, nav) {
+    const w = web || searchWeb(q);
+    return `<div class="grid grid-cols-3 gap-2.5 pt-1">
+      <a href="${esc(w)}" target="_blank" rel="noopener noreferrer" class="tap rounded-2xl border-2 border-line bg-cream/60 text-sm md:text-base font-extrabold flex items-center justify-center">🌐 官方網站</a>
+      <a href="${esc(mapPlace(q))}" target="_blank" rel="noopener noreferrer" class="tap rounded-2xl border-2 border-line bg-cream/60 text-sm md:text-base font-extrabold flex items-center justify-center">📍 景點定位</a>
+      <a href="${esc(nav)}" target="_blank" rel="noopener noreferrer" class="tap rounded-2xl bg-vermilion text-white text-sm md:text-base font-extrabold flex items-center justify-center shadow-sm">🚗 導航前往</a></div>`;
+  }
+
+  function renderKeyChips(it) {
+    const chips = [];
+    if (it.transport && it.transport !== '-') {
+      chips.push(`<span class="inline-flex items-center gap-1 text-sm font-bold text-slate-700 bg-cream/85 border border-line px-2.5 py-0.5 rounded-full">🚃 ${esc(shortText(it.transport, 14))}</span>`);
+    }
+    if (it.cost && it.cost !== '-') {
+      chips.push(`<span class="hidden md:inline-flex items-center gap-1 text-sm font-bold text-slate-600 bg-cream/80 border border-line px-2.5 py-0.5 rounded-full">💰 ${esc(shortText(it.cost, 16))}</span>`);
+    }
+    if (it.options && it.options.length) {
+      chips.push(`<span class="inline-flex items-center gap-1 text-sm font-bold text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded-full">🍽️ ${it.options.length} 選 1</span>`);
+    }
+    return chips.length ? `<div class="hidden md:flex flex-wrap gap-1.5 mt-2">${chips.join('')}</div>` : '';
+  }
+
+  function renderItem(it, di, ii) {
+    const key = `${di}-${ii}`;
+    const open = key in state.openMap ? state.openMap[key] : state.allOpen;
+    const hasDriver = it.ja && it.addr;
+    const cat = CAT_STYLE[it.cat] || CAT_STYLE['機場'];
+    const notes = (it.notes || []).map((n) => `<li>${esc(n)}</li>`).join('');
+    const opts = (it.options || []).map((o) => `
+      <div class="rounded-2xl bg-cream/70 border-2 border-line p-4">
+        <p class="font-black text-base md:text-lg text-ink">${esc(o.name)}</p>
+        <p class="text-sm md:text-base text-slate-600 mt-1 leading-relaxed">${esc(o.detail)}</p>
+        <div class="grid grid-cols-3 gap-2 mt-3">
+          <a href="${esc(searchWeb(o.q))}" target="_blank" rel="noopener noreferrer" class="tap rounded-xl border-2 border-line bg-white text-xs md:text-sm font-extrabold flex items-center justify-center">🌐 官網</a>
+          <a href="${esc(mapPlace(o.q))}" target="_blank" rel="noopener noreferrer" class="tap rounded-xl border-2 border-line bg-white text-xs md:text-sm font-extrabold flex items-center justify-center">📍 定位</a>
+          <a href="${esc(mapNav(o.q))}" target="_blank" rel="noopener noreferrer" class="tap rounded-xl bg-vermilion text-white text-xs md:text-sm font-extrabold flex items-center justify-center">🚗 導航</a>
+        </div></div>`).join('');
+    return `<li class="relative">
+      <span class="hidden md:block absolute -left-[37px] top-5 w-4 h-4 rounded-full bg-vermilion ring-4 ring-paper" aria-hidden="true"></span>
+      <div class="paper-card rounded-3xl overflow-hidden">
+      <div class="flex items-stretch">
+        <button type="button" class="toggleItem flex-1 text-left p-4 md:p-5 min-w-0 hover:bg-cream/30 transition-colors" data-key="${key}" aria-expanded="${open}">
+          <div class="flex items-center gap-2 flex-nowrap">
+            <span class="font-mono text-sm md:text-base font-black px-2.5 py-0.5 rounded-full bg-ink text-white shrink-0">${esc(it.time)}</span>
+            <span class="hidden md:inline-block text-sm font-extrabold px-2.5 py-0.5 rounded-full ${cat}">${esc(it.cat)}</span>
+            <span class="foldBadge ml-auto text-xs md:text-sm font-extrabold px-2.5 py-0.5 rounded-full bg-cream border border-line text-vermilion shrink-0">${open ? '▴ 收合' : '▾ 詳情'}</span>
+          </div>
+          <h3 class="mt-2 font-black text-xl md:text-xl text-ink leading-snug">${esc(it.title)}</h3>
+          ${it.ja ? `<p class="hidden md:block font-sans font-bold text-base text-slate-500 mt-0.5 truncate">${esc(it.ja)}</p>` : ''}
+          ${renderKeyChips(it)}
+        </button>
+        ${hasDriver ? `<button type="button" class="driverBtn tap w-16 md:w-24 shrink-0 border-l-2 border-line bg-cream/50 hover:bg-cream text-xs md:text-sm font-black text-vermilion flex flex-col items-center justify-center gap-1" data-di="${di}" data-ii="${ii}" aria-label="開啟司機卡"><span class="text-2xl leading-none">🚕</span>司機卡</button>` : ''}
+      </div>
+      <div class="detail-body px-4 pb-4 pt-3.5 md:px-5 md:pb-5 md:pt-4 space-y-3.5 md:space-y-4 text-base md:text-lg border-t-2 border-dashed border-line bg-paper/40" ${open ? '' : 'hidden'}>
+        ${it.ja ? `<p class="md:hidden font-sans font-extrabold text-base text-slate-600">🇯🇵 ${esc(it.ja)}</p>` : ''}
+        ${it.addr ? `<div class="flex items-center justify-between gap-2.5 rounded-2xl bg-cream/70 border-2 border-line p-3">
+          <p class="text-sm md:text-base font-bold leading-relaxed break-words min-w-0">📍 ${esc(it.addr)}</p>
+          <button type="button" class="copyAddr tap shrink-0 px-3 rounded-xl border-2 border-line bg-white text-sm font-extrabold" data-di="${di}" data-ii="${ii}">📋 複製</button></div>` : ''}
+        <dl class="grid grid-cols-[5.5rem_1fr] gap-x-3 gap-y-2 text-sm md:text-base">
+          <dt class="text-slate-500 font-bold">營業時間</dt><dd class="font-bold text-ink">${esc(it.hours || '-')}</dd>
+          <dt class="text-slate-500 font-bold">預估費用</dt><dd class="font-bold text-ink">${esc(it.cost || '-')}</dd>
+          <dt class="text-slate-500 font-bold">交通方式</dt><dd class="font-bold text-ink">${esc(it.transport || '-')}</dd>
+        </dl>
+        ${notes ? `<div class="rounded-2xl bg-white border border-line p-4"><p class="text-sm font-black text-vermilion mb-2">📝 行程詳細敘述與重點</p><ul class="list-disc pl-5 space-y-2 leading-relaxed text-slate-800 text-base md:text-lg">${notes}</ul></div>` : ''}
+        ${opts ? `<div class="space-y-2.5">${opts}</div>` : ''}
+        ${it.photo ? `<p class="text-sm md:text-base leading-relaxed rounded-2xl bg-amber-50 border-2 border-amber-200 p-3.5">📷 <b>拍照建議：</b>${esc(it.photo)}</p>` : ''}
+        ${linkBtns(it.q, it.web, mapNav(it.q))}
+      </div></div></li>`;
+  }
+
+  function renderSummaryVisibility() {
+    const sumEl = $('daySummary');
+    const btnEl = $('daySummaryBtn');
+    const badgeEl = $('daySummaryBadge');
+    if (!sumEl || !btnEl || !badgeEl) return;
+    sumEl.toggleAttribute('hidden', !state.summaryOpen);
+    btnEl.setAttribute('aria-expanded', String(state.summaryOpen));
+    badgeEl.textContent = state.summaryOpen ? '▴ 收合' : '▾ 展開';
+  }
+
+  /* =====================================================================
+     即時天氣 API（Open-Meteo 免金鑰：依當日 D1–D6 行程動線顯示各站即時氣象與預報）
+     ===================================================================== */
+  const DAY_WEATHER_SPOTS = {
+    1: [
+      { key: 'taoyuan', short: '🛫 桃園機場', title: '🛫 07:15–12:35 台灣桃園國際機場（出發）', hist: '1–2 月約 13–19°C' },
+      { key: 'narita', short: '🛬 成田機場', title: '🛬 16:35–17:50 成田國際機場（抵達出關）', hist: '1–2 月約 2–10°C' },
+      { key: 'oshiage', short: '🏨 東京押上', title: '🏨 19:10–21:50 東京押上・晴空街道（入住＆晚餐）', hist: '1–2 月夜間約 3–7°C' }
+    ],
+    2: [
+      { key: 'fuji', short: '🗻 富士山河口湖', title: '🗻 09:30–16:00 新倉山淺間公園・河口湖大石公園・全景纜車', hist: '1–2 月約 -4–5°C（湖畔風大易結冰）' },
+      { key: 'oshiage', short: '🍲 東京押上', title: '🍲 18:30–21:00 東京押上（返抵＆超市採買和牛壽喜燒）', hist: '1–2 月夜間約 3–7°C' }
+    ],
+    3: [
+      { key: 'ikebukuro', short: '🏙️ 東京池袋', title: '🏙️ 10:00–19:15 南池袋公園・太陽城寶可夢・陽光水族館・池袋東口', hist: '1–2 月約 2–10°C（頂樓水族館偏冷）' },
+      { key: 'oshiage', short: '🏨 東京押上', title: '🏨 08:15 / 20:00 東京押上（早晚往返飯店基地）', hist: '1–2 月早晚約 3–7°C' }
+    ],
+    4: [
+      { key: 'central', short: '🗼 原宿・鐵塔・東京站', title: '🗼 09:50–20:00 明治神宮・增上寺東京鐵塔・日本橋・東京車站', hist: '1–2 月約 3–11°C（丸之內夜拍偏冷）' },
+      { key: 'oshiage', short: '🏨 東京押上', title: '🏨 08:15 / 20:25 東京押上（早晚往返飯店基地）', hist: '1–2 月早晚約 3–7°C' }
+    ],
+    5: [
+      { key: 'oshiage', short: '🏮 淺草・東京晴空塔', title: '🏮 09:25–21:00 淺草寺雷門・隅田川步道・晴空塔展望台・押上', hist: '1–2 月約 3–11°C（跨河步道風大）' }
+    ],
+    6: [
+      { key: 'oshiage', short: '🗼 東京押上', title: '🗼 08:30–13:45 押上十間橋・晴空塔巡禮＆最後午餐', hist: '1–2 月日間約 5–11°C' },
+      { key: 'narita', short: '🛫 成田機場', title: '🛫 14:45–17:45 成田國際機場（京成特急直達・報到＆免稅店）', hist: '1–2 月約 2–10°C' },
+      { key: 'taoyuan', short: '🏠 桃園機場', title: '🏠 20:55–23:40 台灣桃園國際機場（返抵溫暖的家）', hist: '1–2 月約 14–20°C' }
+    ]
+  };
+
+  function wmoInfo(code) {
+    const c = Number(code);
+    if (c === 0) return ['☀️', '晴朗'];
+    if (c === 1 || c === 2) return ['🌤️', '晴時多雲'];
+    if (c === 3) return ['☁️', '陰天'];
+    if (c === 45 || c === 48) return ['🌫️', '有霧'];
+    if (c >= 51 && c <= 57) return ['🌦️', '毛毛雨'];
+    if ((c >= 61 && c <= 67) || (c >= 80 && c <= 82)) return ['🌧️', '降雨'];
+    if ((c >= 71 && c <= 77) || c === 85 || c === 86) return ['❄️', '降雪'];
+    if (c >= 95) return ['⛈️', '雷陣雨'];
+    return ['🌤️', '多雲'];
+  }
+
+  function buildLiveWeatherDetailHtml(d) {
+    const w = state.weather;
+    const barEl = $('liveWeatherBar');
+    const spots = DAY_WEATHER_SPOTS[d.day] || DAY_WEATHER_SPOTS[1];
+    if (!w || !w.oshiage) {
+      if (barEl) {
+        barEl.innerHTML = `<p class="font-black text-sm md:text-base text-ink">🌤️ D${d.day} 當日行程氣候：${esc(spots.map((s) => s.short).join(' ➔ '))}</p>` +
+          `<p id="weatherStatus" class="text-xs md:text-sm font-bold text-slate-500 mt-0.5">點擊右側「🔄 即時天氣」取得當日行程地點最新氣溫與預報</p>`;
+      }
+      return `<p class="text-slate-600 text-xs md:text-base leading-relaxed mt-0.5">${esc(d.weather)}</p>`;
+    }
+    const primarySpot = spots[0];
+    const priData = w[primarySpot.key] || w.oshiage;
+    const matchedDay = (priData.daily || []).find((x) => x.date === d.date);
+    const todayDayFc = (priData.daily || [])[0];
+    const fcBadge = matchedDay
+      ? `📅 ${d.date.slice(5).replace('-', '/')} 預報 ${matchedDay.min}°~${matchedDay.max}°C・降雨 ${matchedDay.pop}%`
+      : (todayDayFc ? `今日高低溫 ${todayDayFc.min}°~${todayDayFc.max}°C・降雨 ${todayDayFc.pop}%` : '');
+    if (barEl) {
+      const line = spots.map((sp) => {
+        const cd = w[sp.key] || w.oshiage;
+        const [ic] = wmoInfo(cd.code);
+        return `${sp.short} ${cd.temp}°C ${ic}`;
+      }).join(' ｜ ');
+      barEl.innerHTML = `<p class="font-black text-sm md:text-base text-ink leading-snug">${esc(line)}</p>` +
+        `<p id="weatherStatus" class="hidden md:block text-xs md:text-sm font-bold text-slate-500 mt-0.5 truncate">D${d.day} ${fcBadge ? esc(fcBadge) : '即時天氣（' + esc(w.updatedAt) + '）'}</p>`;
+    }
+    const spotCards = spots.map((sp) => {
+      const c = w[sp.key] || w.oshiage;
+      const [ic, txt] = wmoInfo(c.code);
+      const isTargetForecast = (c.daily || []).some((x) => x.date === d.date);
+      const df = (c.daily || []).find((x) => x.date === d.date) || (c.daily || [])[0];
+      const dfLabel = isTargetForecast ? `📅 ${d.date.slice(5).replace('-', '/')} 當日預報` : '今日預報';
+      return `<div class="rounded-2xl bg-cream/70 border-2 border-line p-3.5"><div class="flex items-center justify-between gap-2 flex-wrap"><span class="font-black text-xs md:text-base text-ink">${esc(sp.title)}</span><span class="text-xs md:text-sm font-extrabold px-2.5 py-0.5 rounded-full bg-white border border-line text-vermilion">${ic} ${txt}</span></div><div class="flex items-baseline gap-2 flex-wrap mt-1.5"><span class="font-mono font-black text-lg md:text-2xl text-ink">${c.temp}°C</span><span class="text-xs md:text-sm font-bold text-slate-600">體感 ${c.feel}°C ・ 風速 ${c.wind}km/h</span><span class="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full ml-auto">${esc(sp.hist)}</span></div>${df ? `<p class="text-xs md:text-sm font-bold text-slate-600 mt-1.5">${dfLabel}：高低溫 ${df.min}°C ～ ${df.max}°C ｜ ☔ 降雨機率 ${df.pop}%</p>` : ''}</div>`;
+    }).join('');
+    return `<div class="md:hidden rounded-2xl bg-cream/85 border border-line p-3 mt-1.5 mb-2.5"><p class="text-xs font-black text-vermilion mb-1">📌 本日重點路線</p><p class="text-sm font-extrabold text-ink leading-relaxed">${esc(d.highlight)}</p></div>` +
+      `<div class="space-y-2.5 mt-1.5 mb-2.5">${spotCards}</div>` +
+      `<div class="rounded-2xl bg-white border border-line p-3.5"><p class="text-sm font-black text-vermilion mb-1">🧣 D${d.day} 當日穿搭與防寒建議</p><p class="text-slate-700 text-base leading-relaxed">${esc(d.weather)}</p></div>`;
+  }
+
+  function parseCityMeteo(raw) {
+    const cur = raw.current || {};
+    const dy = raw.daily || {};
+    const times = dy.time || [];
+    const daily = times.map((t, i) => ({
+      date: t,
+      code: (dy.weather_code || [])[i] ?? 0,
+      max: Math.round((dy.temperature_2m_max || [])[i] ?? 0),
+      min: Math.round((dy.temperature_2m_min || [])[i] ?? 0),
+      pop: (dy.precipitation_probability_max || [])[i] ?? 0
+    }));
+    return {
+      temp: Number((cur.temperature_2m ?? 0).toFixed(1)),
+      feel: Number((cur.apparent_temperature ?? 0).toFixed(1)),
+      code: cur.weather_code ?? 0,
+      wind: Math.round(cur.wind_speed_10m ?? 0),
+      daily
+    };
+  }
+
+  async function fetchLiveWeather(manual = false) {
+    const stEl = $('weatherStatus');
+    if (manual && stEl) stEl.textContent = '正在取得當日行程各站最新即時氣象…';
+    try {
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=35.7101,35.4982,35.7295,35.6812,35.7720,25.0797&longitude=139.8107,138.7686,139.7109,139.7671,140.3929,121.2342&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTokyo&forecast_days=16';
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const arr = await res.json();
+      if (!Array.isArray(arr) || arr.length < 6) throw new Error('Invalid payload');
+      const now = new Date();
+      const ts = `${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      state.weather = {
+        oshiage: parseCityMeteo(arr[0]),
+        fuji: parseCityMeteo(arr[1]),
+        ikebukuro: parseCityMeteo(arr[2]),
+        central: parseCityMeteo(arr[3]),
+        narita: parseCityMeteo(arr[4]),
+        taoyuan: parseCityMeteo(arr[5]),
+        updatedAt: ts
+      };
+      store.set('tf_weather', state.weather);
+      renderItinerary();
+      if (manual) toast('已更新當日行程地點即時天氣');
+    } catch {
+      renderItinerary();
+      const stAfter = $('weatherStatus');
+      if (stAfter && state.weather && state.weather.updatedAt) {
+        stAfter.textContent = `離線快取氣象（最後更新：${state.weather.updatedAt}）`;
+      }
+      if (manual) toast('目前無法連線氣象伺服器，已顯示快取天氣');
+    }
+  }
+
+  function renderItinerary() {
+    const di = ITINERARY_DATA.findIndex((d) => d.day === state.day);
+    const d = ITINERARY_DATA[di];
+    $('dayTitle').textContent = `D${d.day}｜${d.title}`;
+    $('dayHighlight').textContent = d.highlight;
+    const weatherHtml = buildLiveWeatherDetailHtml(d);
+    $('daySummary').innerHTML = [
+      ['🌤️', `D${d.day} 當日行程即時天氣與穿搭建議`, weatherHtml, true],
+      ['🎫', '建議交通票券', d.pass, false],
+      ['🚃', '轉乘與末班提醒', d.lastTrain, false]
+    ].map(([ic, t, body, isRaw]) => `<div class="flex gap-3"><span class="text-2xl leading-none">${ic}</span><div class="min-w-0 flex-1"><p class="font-black text-sm md:text-lg text-ink">${t}</p>${isRaw ? body : `<p class="text-slate-600 text-xs md:text-base leading-relaxed mt-0.5">${esc(body)}</p>`}</div></div>`).join('');
+    renderSummaryVisibility();
+    $('timeline').innerHTML = d.items.map((it, ii) => renderItem(it, di, ii)).join('');
+    $('toggleAllLabel').textContent = state.allOpen ? '全部折疊' : '全部展開';
+    $('hotelFab').href = mapNavDrive(HOTEL.q);
+    renderDaySelector();
+    icons();
+  }
+
+  function bindItinerary() {
+    $('daySelector').addEventListener('click', (e) => {
+      const b = e.target.closest('.dayBtn'); if (!b) return;
+      state.day = Number(b.dataset.day); state.openMap = {}; renderItinerary(); window.scrollTo({ top: 0 });
+    });
+    $('daySummaryBtn').addEventListener('click', () => {
+      state.summaryOpen = !state.summaryOpen;
+      renderSummaryVisibility();
+    });
+    $('refreshWeatherBtn').addEventListener('click', () => fetchLiveWeather(true));
+    $('timeline').addEventListener('click', (e) => {
+      const tgl = e.target.closest('.toggleItem');
+      if (tgl) {
+        const key = tgl.dataset.key;
+        const li = tgl.closest('li');
+        const body = li.querySelector('.detail-body');
+        const badge = tgl.querySelector('.foldBadge');
+        const open = body.hasAttribute('hidden');
+        body.toggleAttribute('hidden', !open);
+        tgl.setAttribute('aria-expanded', String(open));
+        if (badge) badge.textContent = open ? '▴ 收合' : '▾ 詳情';
+        state.openMap[key] = open;
+        return;
+      }
+      const dv = e.target.closest('.driverBtn');
+      if (dv) { openDriver(ITINERARY_DATA[dv.dataset.di].items[dv.dataset.ii]); return; }
+      const cp = e.target.closest('.copyAddr');
+      if (cp) { const it = ITINERARY_DATA[cp.dataset.di].items[cp.dataset.ii]; copyText(`${it.ja || it.title}\n${it.addr}`); }
+    });
+    $('toggleAllBtn').addEventListener('click', () => {
+      state.allOpen = !state.allOpen;
+      state.openMap = {};
+      renderItinerary();
+    });
+    $('jumpTodayBtn').addEventListener('click', () => {
+      showTab('tab-itinerary'); state.day = todayDay || 1; state.openMap = {}; renderItinerary(); window.scrollTo({ top: 0 });
+    });
+    // 手機左右滑動手勢切換第 1–6 天（循環切換，向右／向左滑皆順暢）
+    let touchStartX = 0, touchStartY = 0;
+    const itSec = $('tab-itinerary');
+    itSec.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    itSec.addEventListener('touchend', (e) => {
+      if (!e.changedTouches.length) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) >= 60 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+        const total = ITINERARY_DATA.length;
+        state.day = dx > 0 ? (state.day % total) + 1 : ((state.day - 2 + total) % total) + 1;
+        state.openMap = {};
+        renderItinerary();
+        window.scrollTo({ top: 0 });
+        const cur = ITINERARY_DATA.find((d) => d.day === state.day);
+        if (cur) toast(`📅 第 ${cur.day} 天（${cur.date.slice(5).replace('-', '/')} 週${cur.weekday}）`);
+      }
+    }, { passive: true });
+  }
+
+  /* 司機卡（含日語／中文語音發音） */
+  let driverItem = null;
+  function setSpeakBtnState(speaking) {
+    const btn = $('drvSpeak');
+    if (!btn) return;
+    btn.textContent = speaking ? '🔊 發音播放中…（再按一次停止）' : '🔊 播放語音（給司機聽）';
+    btn.dataset.speaking = speaking ? '1' : '0';
+  }
+  function openDriver(it) {
+    driverItem = it;
+    $('drvJa').textContent = it.ja; $('drvZh').textContent = it.title; $('drvAddr').textContent = it.addr;
+    $('drvNav').href = mapNavDrive(it.q);
+    setSpeakBtnState(false);
+    $('driverModal').classList.remove('hidden'); document.body.style.overflow = 'hidden';
+  }
+  function closeDriver() {
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    setSpeakBtnState(false);
+    $('driverModal').classList.add('hidden'); document.body.style.overflow = '';
+  }
+  function bindDriver() {
+    $('driverClose').addEventListener('click', closeDriver);
+    $('drvCopy').addEventListener('click', () => driverItem && copyText(`${driverItem.ja}\n${driverItem.addr}`));
+    $('drvSpeak').addEventListener('click', () => {
+      if (!driverItem) return;
+      const isTw = (driverItem.addr || '').includes('桃園') || (driverItem.ja || '').includes('台灣');
+      const lang = isTw ? 'zh-TW' : 'ja-JP';
+      const text = isTw
+        ? `不好意思，請載我到這裡：${driverItem.ja}，地址是 ${driverItem.addr}`
+        : `すみません、ここへ行ってください。${driverItem.ja}。住所は、${driverItem.addr}、です。`;
+      speakText(text, lang, setSpeakBtnState);
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDriver(); });
+  }
+
+  /* =====================================================================
+     匯率與分帳
+     ===================================================================== */
+  const fmt = (n) => Math.round(n).toLocaleString('en-US');
+  async function fetchLiveRate(manual = false) {
+    const statusEl = $('rateStatus');
+    if (manual) statusEl.textContent = '正在取得最新即時匯率…';
+    const apis = [
+      async () => {
+        const r = await fetch('https://open.er-api.com/v6/latest/JPY');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const d = await r.json();
+        return d && d.rates && d.rates.TWD ? Number(d.rates.TWD) : null;
+      },
+      async () => {
+        const r = await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/jpy.json');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const d = await r.json();
+        return d && d.jpy && d.jpy.twd ? Number(d.jpy.twd) : null;
+      }
+    ];
+    for (const fn of apis) {
+      try {
+        const raw = await fn();
+        if (Number.isFinite(raw) && raw > 0) {
+          const rate = Number(raw.toFixed(4));
+          state.rate = rate;
+          store.set('tf_rate', rate);
+          store.set('tf_rate_custom', false);
+          const now = new Date();
+          const ts = `${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+          store.set('tf_rate_time', ts);
+          $('rateInput').value = rate;
+          statusEl.textContent = `市場即時匯率（更新於 ${ts}）`;
+          const v = parseFloat($('jpyInput').value);
+          $('twdInput').value = Number.isFinite(v) ? (v * state.rate).toFixed(0) : '';
+          renderExpenses();
+          if (manual) toast(`已更新即時匯率：1 JPY = ${rate} TWD`);
+          return;
+        }
+      } catch {}
+    }
+    const savedTime = store.get('tf_rate_time', '');
+    statusEl.textContent = savedTime ? `離線模式（沿用 ${savedTime} 匯率）` : '離線模式（使用本機預設匯率）';
+    if (manual) toast('目前無法連線，已沿用本機儲存匯率');
+  }
+
+  function initCurrency() {
+    $('rateInput').value = state.rate;
+    const isCustom = store.get('tf_rate_custom', false);
+    const savedTime = store.get('tf_rate_time', '');
+    if (isCustom) {
+      $('rateStatus').textContent = '自訂匯率（已儲存在本機）';
+    } else if (savedTime) {
+      $('rateStatus').textContent = `市場即時匯率（更新於 ${savedTime}）`;
+    }
+    $('quickAmounts').innerHTML = [500, 1000, 3000, 5000, 10000].map((a) => `<button type="button" class="quickAmt tap px-3.5 rounded-xl border-2 border-line bg-cream/60 text-sm font-mono font-extrabold" data-a="${a}">¥${a.toLocaleString()}</button>`).join('');
+    const fromJpy = () => { const v = parseFloat($('jpyInput').value); $('twdInput').value = Number.isFinite(v) ? (v * state.rate).toFixed(0) : ''; };
+    const fromTwd = () => { const v = parseFloat($('twdInput').value); $('jpyInput').value = Number.isFinite(v) && state.rate > 0 ? (v / state.rate).toFixed(0) : ''; };
+    $('jpyInput').addEventListener('input', fromJpy);
+    $('twdInput').addEventListener('input', fromTwd);
+    $('rateInput').addEventListener('input', () => {
+      const v = parseFloat($('rateInput').value);
+      if (Number.isFinite(v) && v > 0) {
+        state.rate = v;
+        store.set('tf_rate', v);
+        store.set('tf_rate_custom', true);
+        $('rateStatus').textContent = '自訂匯率（已儲存在本機）';
+        fromJpy();
+        renderExpenses();
+      }
+    });
+    $('fetchRateBtn').addEventListener('click', () => fetchLiveRate(true));
+    $('quickAmounts').addEventListener('click', (e) => { const b = e.target.closest('.quickAmt'); if (b) { $('jpyInput').value = b.dataset.a; fromJpy(); } });
+    $('jpyInput').value = 1000; fromJpy();
+    if (!isCustom && navigator.onLine) fetchLiveRate(false);
+  }
+
+  function renderExpenses() {
+    $('expPayer').innerHTML = PEOPLE.map((p) => `<option value="${esc(p)}">${esc(p)} 先付</option>`).join('');
+    const total = state.expenses.reduce((s, e) => s + e.amount, 0);
+    const per = total / SPLIT_N;
+    $('expenseSummary').innerHTML = `
+      <div class="rounded-2xl bg-cream/70 border-2 border-line p-4"><p class="text-sm font-bold text-slate-500">總支出</p><p class="font-mono font-black text-xl mt-0.5">¥${fmt(total)}</p><p class="text-sm font-medium text-slate-500 mt-0.5">約 NT$ ${fmt(total * state.rate)}</p></div>
+      <div class="rounded-2xl bg-cream/70 border-2 border-line p-4"><p class="text-sm font-bold text-slate-500">每人均分（${SPLIT_N} 人）</p><p class="font-mono font-black text-xl text-vermilion mt-0.5">¥${fmt(per)}</p><p class="text-sm font-medium text-slate-500 mt-0.5">約 NT$ ${fmt(per * state.rate)}</p></div>`;
+    const paid = {}; PEOPLE.slice(0, SPLIT_N).forEach((p) => { paid[p] = 0; });
+    let pooled = 0;
+    state.expenses.forEach((e) => { if (e.payer in paid) paid[e.payer] += e.amount; else pooled += e.amount; });
+    const personalShare = (total - pooled) / SPLIT_N;
+    $('settleBox').innerHTML = total ? `<p class="font-black text-sm md:text-base">個人結算（公費項目不納入）</p>` + Object.entries(paid).map(([p, v]) => {
+      const diff = v - personalShare;
+      return `<p class="flex justify-between text-sm md:text-base"><span>${esc(p)}（已付 ¥${fmt(v)}）</span><span class="font-mono font-black ${diff >= 0 ? 'text-emerald-600' : 'text-vermilion'}">${diff >= 0 ? '應收' : '應付'} ¥${fmt(Math.abs(diff))}</span></p>`;
+    }).join('') : '';
+    $('expenseList').innerHTML = state.expenses.length ? state.expenses.map((e, i) => `
+      <li class="flex items-center justify-between gap-2.5 rounded-2xl border-2 border-line bg-cream/40 p-3.5">
+        <div class="min-w-0"><p class="font-black text-base md:text-lg truncate">${esc(e.title)}</p><p class="text-sm font-medium text-slate-500">${esc(e.payer)} 先付</p></div>
+        <div class="flex items-center gap-2.5"><span class="font-mono font-black text-base md:text-lg">¥${fmt(e.amount)}</span>
+        <button type="button" class="delExp tap px-3.5 rounded-xl border-2 border-rose-200 bg-rose-50 text-rose-600 text-xs md:text-sm font-extrabold" data-i="${i}" aria-label="刪除 ${esc(e.title)}">刪除</button></div></li>`).join('')
+      : '<li class="text-center text-base font-medium text-slate-400 py-4">尚無記帳紀錄</li>';
+  }
+
+  function snapshot() { return { v: 1, rate: state.rate, expenses: state.expenses, packing: state.packing, vouchers: state.vouchers, ins: state.ins }; }
+  function applySnapshot(obj) {
+    if (!obj || typeof obj !== 'object') throw new Error('格式不正確');
+    if (Array.isArray(obj.expenses)) {
+      state.expenses = obj.expenses
+        .filter((e) => e && typeof e.title === 'string' && Number.isFinite(Number(e.amount)))
+        .map((e) => ({ title: e.title.slice(0, 40), amount: Number(e.amount), payer: PEOPLE.includes(e.payer) ? e.payer : '公費' }));
+      store.set('tf_expenses', state.expenses);
+    }
+    if (obj.packing && typeof obj.packing === 'object') { state.packing = obj.packing; store.set('tf_packing', state.packing); }
+    if (obj.vouchers && typeof obj.vouchers === 'object') { state.vouchers = obj.vouchers; store.set('tf_vouchers', state.vouchers); }
+    if (Number.isFinite(Number(obj.rate)) && Number(obj.rate) > 0) { state.rate = Number(obj.rate); store.set('tf_rate', state.rate); $('rateInput').value = state.rate; }
+    renderExpenses(); renderPacking(); renderVouchers();
+  }
+
+  function bindMoney() {
+    $('expenseForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const title = $('expTitle').value.trim(); const amount = Number($('expAmount').value);
+      if (!title || !Number.isFinite(amount) || amount <= 0) { toast('請輸入項目與正確金額'); return; }
+      state.expenses.unshift({ title: title.slice(0, 40), amount, payer: $('expPayer').value });
+      store.set('tf_expenses', state.expenses); renderExpenses(); $('expTitle').value = ''; $('expAmount').value = ''; toast('已新增');
+    });
+    $('expenseList').addEventListener('click', (e) => {
+      const b = e.target.closest('.delExp'); if (!b) return;
+      state.expenses.splice(Number(b.dataset.i), 1); store.set('tf_expenses', state.expenses); renderExpenses();
+    });
+    $('clearExpBtn').addEventListener('click', () => { if (confirm('確定清空所有帳目？此動作無法復原。')) { state.expenses = []; store.set('tf_expenses', []); renderExpenses(); } });
+    $('exportBtn').addEventListener('click', () => copyText(b64enc(JSON.stringify(snapshot()))));
+    $('exportPackBtn').addEventListener('click', () => copyText(b64enc(JSON.stringify(snapshot()))));
+    $('importBtn').addEventListener('click', () => $('importPanel').classList.toggle('hidden'));
+    $('importApplyBtn').addEventListener('click', () => {
+      const raw = $('importText').value.trim(); if (!raw) { toast('請先貼上分享碼'); return; }
+      try { applySnapshot(JSON.parse(raw.startsWith('{') ? raw : b64dec(raw))); toast('同步完成'); $('importText').value = ''; $('importPanel').classList.add('hidden'); }
+      catch (err) { toast('分享碼無法解析：' + err.message); }
+    });
+  }
+
+  /* =====================================================================
+     憑證與清單（詳細備註與各分類細項支援摺疊）
+     ===================================================================== */
+  function renderVouchers() {
+    $('voucherList').innerHTML = VOUCHERS_DATA.map((v) => {
+      const s = { code: '', phone: v.phone || '', ...(state.vouchers[v.id] || {}) };
+      const noteOpen = v.id in state.voucherNoteOpen ? state.voucherNoteOpen[v.id] : !isMobileView();
+      return `<div class="paper-card rounded-3xl border-2 border-amber-300 p-4 md:p-6 space-y-3">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <div class="flex items-center gap-2"><span class="text-xs md:text-sm font-extrabold px-3 py-0.5 rounded-full bg-amber-100 text-amber-800">${esc(v.type)}</span><span class="text-xs md:text-base font-bold text-slate-500">${esc(v.when)}</span></div>
+          <button type="button" class="toggleVoucherNote text-xs md:text-sm font-extrabold px-2.5 py-1 rounded-full bg-cream border border-line text-vermilion" data-vid="${v.id}" aria-expanded="${noteOpen}">${noteOpen ? '▴ 收合說明' : '▾ 詳細說明'}</button>
+        </div>
+        <h3 class="font-black text-base md:text-xl text-ink">${esc(v.title)}</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <label class="block text-xs md:text-base font-extrabold text-slate-600">預約／訂單編號
+            <input data-id="${v.id}" data-f="code" value="${esc(s.code)}" maxlength="60" class="vIn mt-1 w-full tap px-3.5 rounded-2xl border-2 border-line bg-cream/50 text-sm md:text-lg font-mono font-bold" placeholder="尚未填寫"></label>
+          <label class="block text-xs md:text-base font-extrabold text-slate-600">聯絡電話
+            <input data-id="${v.id}" data-f="phone" value="${esc(s.phone)}" inputmode="tel" maxlength="30" class="vIn mt-1 w-full tap px-3.5 rounded-2xl border-2 border-line bg-cream/50 text-sm md:text-lg font-mono font-bold" placeholder="尚未填寫"></label>
+        </div>
+        <div class="voucherNote fold-panel rounded-2xl bg-cream/60 border border-line p-3 text-xs md:text-base text-slate-600 leading-relaxed" data-vnote="${v.id}" ${noteOpen ? '' : 'hidden'}>📌 ${esc(v.note)}</div>
+        <div class="grid grid-cols-2 gap-2.5 pt-1">
+          ${v.link ? `<a href="${esc(v.link)}" target="_blank" rel="noopener noreferrer" class="tap rounded-2xl border-2 border-line bg-cream/60 text-xs md:text-base font-extrabold flex items-center justify-center">${esc(v.linkLabel)}</a>` : `<span class="tap rounded-2xl border-2 border-dashed border-line text-xs md:text-base text-slate-400 flex items-center justify-center">無官方連結</span>`}
+          <a data-callid="${v.id}" href="${s.phone ? 'tel:' + esc(s.phone.replace(/[^\d+]/g, '')) : '#'}" class="vCall tap rounded-2xl bg-emerald-600 text-white text-xs md:text-base font-extrabold flex items-center justify-center ${s.phone ? '' : 'opacity-50 pointer-events-none'}">📞 撥打電話</a>
+        </div></div>`;
+    }).join('');
+  }
+  function bindVouchers() {
+    $('voucherList').addEventListener('input', (e) => {
+      const el = e.target.closest('.vIn'); if (!el) return;
+      const id = el.dataset.id; state.vouchers[id] = { code: '', phone: '', ...(state.vouchers[id] || {}), [el.dataset.f]: el.value };
+      store.set('tf_vouchers', state.vouchers);
+      if (el.dataset.f === 'phone') {
+        const a = $('voucherList').querySelector(`[data-callid="${id}"]`); const p = el.value.replace(/[^\d+]/g, '');
+        a.href = p ? 'tel:' + p : '#'; a.classList.toggle('opacity-50', !p); a.classList.toggle('pointer-events-none', !p);
+      }
+    });
+    $('voucherList').addEventListener('click', (e) => {
+      const btn = e.target.closest('.toggleVoucherNote'); if (!btn) return;
+      const vid = btn.dataset.vid;
+      const panel = $('voucherList').querySelector(`[data-vnote="${vid}"]`);
+      if (!panel) return;
+      const open = panel.hasAttribute('hidden');
+      panel.toggleAttribute('hidden', !open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? '▴ 收合說明' : '▾ 詳細說明';
+      state.voucherNoteOpen[vid] = open;
+    });
+  }
+
+  function renderPacking() {
+    let total = 0; let done = 0;
+    $('packList').innerHTML = PACKING_DATA.map((g, gi) => {
+      const catDone = g.items.filter(([id]) => !!state.packing[id]).length;
+      const isOpen = gi in state.packOpenMap ? state.packOpenMap[gi] : state.packAllOpen;
+      return `<div class="rounded-2xl border-2 border-line bg-cream/30 overflow-hidden">
+        <button type="button" class="togglePackCat tap w-full px-4 py-3 flex items-center justify-between gap-2 text-left bg-cream/70 hover:bg-cream transition-colors" data-gi="${gi}" aria-expanded="${isOpen}">
+          <h3 class="text-sm md:text-base font-black text-ink min-w-0 truncate">${esc(g.cat)}</h3>
+          <div class="flex items-center gap-2 shrink-0">
+            <span class="text-xs md:text-sm font-mono font-extrabold px-2.5 py-0.5 rounded-full bg-white border border-line text-slate-600">${catDone}/${g.items.length}</span>
+            <span class="packFoldBadge text-xs font-extrabold text-vermilion">${isOpen ? '▴ 收合' : '▾ 展開'}</span>
+          </div>
+        </button>
+        <div class="packCatBody fold-panel divide-y divide-line border-t border-line bg-white" ${isOpen ? '' : 'hidden'}>
+        ${g.items.map(([id, name]) => { total++; const c = !!state.packing[id]; if (c) done++;
+          return `<label class="flex items-start gap-3 px-4 py-3 tap cursor-pointer"><input type="checkbox" class="packCb mt-1 w-5 h-5 shrink-0 accent-[#FF6B6B]" data-id="${id}" ${c ? 'checked' : ''}><span class="text-sm md:text-lg font-medium leading-snug ${c ? 'line-through text-slate-400' : 'text-ink'}">${esc(name)}</span></label>`; }).join('')}
+        </div></div>`;
+    }).join('');
+    const pct = total ? Math.round(done / total * 100) : 0;
+    $('packPct').textContent = `${pct}%（${done}/${total}）`; $('packBar').style.width = pct + '%';
+    const allBtn = $('toggleAllPackBtn');
+    if (allBtn) allBtn.textContent = state.packAllOpen ? '全部折疊' : '全部展開';
+  }
+  function bindPacking() {
+    $('packList').addEventListener('change', (e) => {
+      const cb = e.target.closest('.packCb'); if (!cb) return;
+      state.packing[cb.dataset.id] = cb.checked; store.set('tf_packing', state.packing); renderPacking();
+    });
+    $('packList').addEventListener('click', (e) => {
+      const btn = e.target.closest('.togglePackCat'); if (!btn) return;
+      const gi = Number(btn.dataset.gi);
+      const isOpen = gi in state.packOpenMap ? state.packOpenMap[gi] : state.packAllOpen;
+      state.packOpenMap[gi] = !isOpen;
+      renderPacking();
+    });
+    const allBtn = $('toggleAllPackBtn');
+    if (allBtn) {
+      allBtn.addEventListener('click', () => {
+        state.packAllOpen = !state.packAllOpen;
+        state.packOpenMap = {};
+        renderPacking();
+      });
+    }
+  }
+
+  /* =====================================================================
+     旅行實用日語手指小卡 ＆ SOS 緊急資訊
+     ===================================================================== */
+  let activePhraseCat = 'dining';
+  let activePhraseItem = null;
+
+  function renderPhraseCards() {
+    const tabsEl = $('phraseCatTabs');
+    if (tabsEl) {
+      tabsEl.innerHTML = PHRASE_CATEGORIES.map((c) => {
+        const on = c.id === activePhraseCat;
+        const cnt = PHRASE_CARDS_DATA.filter((x) => x.cat === c.id).length;
+        return `<button type="button" class="phrCatBtn tap py-2 px-1 md:py-2.5 md:px-3 rounded-2xl font-extrabold text-xs md:text-sm border-2 flex flex-col md:flex-row items-center justify-center gap-0.5 md:gap-1.5 transition-all ${on ? 'bg-vermilion text-white border-vermilion shadow-sm' : 'bg-cream/60 text-ink border-line hover:bg-cream'}" data-cat="${c.id}">
+          <span class="text-base md:text-lg leading-none">${c.icon}</span>
+          <span class="leading-tight">${esc(c.short)}<span class="hidden sm:inline"> (${cnt})</span></span>
+        </button>`;
+      }).join('');
+    }
+    const list = PHRASE_CARDS_DATA.map((item, idx) => ({ ...item, idx })).filter((item) => item.cat === activePhraseCat);
+    const curCat = PHRASE_CATEGORIES.find((c) => c.id === activePhraseCat) || PHRASE_CATEGORIES[0];
+    const badgeEl = $('phraseCountBadge');
+    if (badgeEl) badgeEl.textContent = `${curCat.icon} ${curCat.short} (${list.length} 句)`;
+    $('phraseList').innerHTML = list.map((p) => `<div class="phrase rounded-2xl border-2 border-line bg-cream/35 hover:bg-cream/80 p-3.5 md:p-4 flex items-center justify-between gap-3 transition-colors cursor-pointer" data-i="${p.idx}">
+      <div class="min-w-0 flex-1 space-y-1">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-xs md:text-sm font-black px-2.5 py-0.5 rounded-lg bg-white border border-line text-vermilion">${esc(p.tag)}</span>
+          <span class="text-xs md:text-sm font-bold text-slate-600">${esc(p.zh)}</span>
+        </div>
+        <p class="font-sans font-black text-base md:text-xl text-ink leading-snug pt-0.5">${esc(p.ja)}</p>
+      </div>
+      <div class="shrink-0 flex items-center gap-1.5">
+        <button type="button" class="phrZoomBtn tap w-12 h-12 md:w-auto md:h-11 md:px-3.5 rounded-xl bg-white border-2 border-line hover:border-vermilion text-ink font-extrabold flex flex-col md:flex-row items-center justify-center gap-0.5 md:gap-1 shadow-sm" data-i="${p.idx}" aria-label="放大給店員看">
+          <span class="text-base leading-none">🔍</span><span class="text-[11px] md:text-xs leading-none">放大</span>
+        </button>
+        <button type="button" class="phrSpeakBtn tap w-12 h-12 md:w-auto md:h-11 md:px-3.5 rounded-xl bg-rose-50 border-2 border-rose-200 hover:bg-rose-100 text-vermilion font-extrabold flex flex-col md:flex-row items-center justify-center gap-0.5 md:gap-1 shadow-sm" data-i="${p.idx}" aria-label="日語發音">
+          <span class="text-base leading-none">🔊</span><span class="text-[11px] md:text-xs leading-none">發音</span>
+        </button>
+      </div>
+    </div>`).join('');
+  }
+
+  function openPhraseModal(idx) {
+    const p = PHRASE_CARDS_DATA[idx];
+    if (!p) return;
+    activePhraseItem = p;
+    $('phrModalBadge').textContent = p.catName;
+    $('phrModalTag').textContent = p.tag;
+    $('phrModalJa').textContent = p.ja;
+    $('phrModalRo').textContent = p.ro;
+    $('phrModalZh').textContent = p.zh;
+    $('phraseModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePhraseModal() {
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    $('phraseModal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function renderSos() {
+    renderPhraseCards();
+    $('insName').value = state.ins.name || ''; $('insPhone').value = state.ins.phone || '';
+    updateInsCall();
+    const defaultSosOpen = !isMobileView();
+    document.querySelectorAll('.sosToggle').forEach((btn) => {
+      const panel = $(btn.dataset.target);
+      const badge = btn.querySelector('.sosBadge');
+      if (!panel) return;
+      panel.toggleAttribute('hidden', !defaultSosOpen);
+      btn.setAttribute('aria-expanded', String(defaultSosOpen));
+      if (badge) badge.textContent = defaultSosOpen ? '▴ 收合' : '▾ 展開';
+    });
+  }
+  function updateInsCall() {
+    const p = ($('insPhone').value || '').replace(/[^\d+-]/g, ''); const a = $('insCall');
+    a.href = p ? 'tel:' + p : '#'; a.classList.toggle('opacity-50', !p); a.classList.toggle('pointer-events-none', !p);
+  }
+  function bindSos() {
+
+    $('phraseCatTabs').addEventListener('click', (e) => {
+      const b = e.target.closest('.phrCatBtn');
+      if (!b) return;
+      activePhraseCat = b.dataset.cat;
+      renderPhraseCards();
+    });
+    $('phraseList').addEventListener('click', (e) => {
+      const zoomBtn = e.target.closest('.phrZoomBtn');
+      if (zoomBtn) {
+        openPhraseModal(Number(zoomBtn.dataset.i));
+        return;
+      }
+      const speakBtn = e.target.closest('.phrSpeakBtn');
+      if (speakBtn) {
+        const p = PHRASE_CARDS_DATA[Number(speakBtn.dataset.i)];
+        if (p) { speakText(p.ja, 'ja-JP'); copyText(p.ja); }
+        return;
+      }
+      const card = e.target.closest('.phrase');
+      if (card) {
+        openPhraseModal(Number(card.dataset.i));
+      }
+    });
+    $('phrModalClose').addEventListener('click', closePhraseModal);
+    $('phrModalDone').addEventListener('click', closePhraseModal);
+    $('phrModalSpeak').addEventListener('click', () => {
+      if (activePhraseItem) speakText(activePhraseItem.ja, 'ja-JP');
+    });
+    $('phrModalCopy').addEventListener('click', () => {
+      if (activePhraseItem) copyText(activePhraseItem.ja);
+    });
+    document.querySelectorAll('.sosToggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const panel = $(btn.dataset.target);
+        const badge = btn.querySelector('.sosBadge');
+        if (!panel) return;
+        const open = panel.hasAttribute('hidden');
+        panel.toggleAttribute('hidden', !open);
+        btn.setAttribute('aria-expanded', String(open));
+        if (badge) badge.textContent = open ? '▴ 收合' : '▾ 展開';
+      });
+    });
+    const save = () => { state.ins = { name: $('insName').value, phone: $('insPhone').value }; store.set('tf_ins', state.ins); updateInsCall(); };
+    $('insName').addEventListener('input', save); $('insPhone').addEventListener('input', save);
+  }
+
+  /* =====================================================================
+     分頁、網路狀態、Service Worker
+     ===================================================================== */
+  function showTab(id) {
+    document.querySelectorAll('.tab-page').forEach((s) => s.classList.toggle('hidden', s.id !== id));
+    document.querySelectorAll('.navBtn').forEach((b) => {
+      const on = b.dataset.tab === id;
+      b.classList.toggle('text-vermilion', on);
+      b.classList.toggle('bg-rose-50', on);
+      b.setAttribute('aria-current', on ? 'page' : 'false');
+    });
+    $('hotelFab').classList.toggle('hidden', id !== 'tab-itinerary');
+    window.scrollTo({ top: 0 });
+  }
+  function updateNet() {
+    const on = navigator.onLine; const b = $('netBadge');
+    b.textContent = on ? '線上' : '離線模式';
+    b.className = 'text-xs md:text-sm font-extrabold px-3 py-1 rounded-full ' + (on ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800');
+  }
+
+  let deferredInstallPrompt = null;
+  function bindInstallApp() {
+    const btn = $('installAppBtn');
+    if (!btn) return;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    if (isStandalone) {
+      btn.classList.add('hidden');
+      return;
+    }
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+    });
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      btn.classList.add('hidden');
+      toast('已成功安裝至手機主畫面！');
+    });
+    btn.addEventListener('click', async () => {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        const res = await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        if (res && res.outcome === 'accepted') btn.classList.add('hidden');
+      } else if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        toast('請點 Safari 底部「分享 📤」➔「加入主畫面」');
+      } else {
+        toast('請點瀏覽器右上角選單 ➔「安裝應用程式」');
+      }
+    });
+  }
+
+  function removeNetlifyBadge() {
+    const cleanExtra = () => {
+      document.querySelectorAll('html > *:not(head):not(body)').forEach((el) => el.remove());
+      document.querySelectorAll('body > *:not(header):not(nav):not(main):not(#hotelFab):not(#driverModal):not(#phraseModal):not(#toast):not(script):not(style)').forEach((el) => el.remove());
+      document.querySelectorAll('a[href*="netlify" i], [id*="netlify" i], [class*="netlify" i], iframe[src*="netlify" i]').forEach((el) => el.remove());
+    };
+    cleanExtra();
+    [200, 800, 2000].forEach((ms) => setTimeout(cleanExtra, ms));
+    window.addEventListener('load', cleanExtra);
+    const obs = new MutationObserver(cleanExtra);
+    obs.observe(document.documentElement, { childList: true, subtree: true });
+  }
+
+  function init() {
+    removeNetlifyBadge();
+    initSmartToday();
+    bindItinerary(); bindDriver(); bindMoney(); bindVouchers(); bindPacking(); bindSos(); bindInstallApp();
+    initCurrency(); renderExpenses(); renderVouchers(); renderPacking(); renderSos(); renderItinerary(); fetchLiveWeather(false);
+    document.querySelectorAll('.navBtn').forEach((b) => b.addEventListener('click', () => showTab(b.dataset.tab)));
+    showTab('tab-itinerary');
+    window.addEventListener('online', updateNet); window.addEventListener('offline', updateNet); updateNet();
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch((e) => console.warn('SW 註冊失敗', e));
+    icons();
+  }
+  document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

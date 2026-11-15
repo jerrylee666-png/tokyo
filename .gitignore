@@ -1,0 +1,14 @@
+# 個人設定與敏感資料（勿上傳至公開倉庫）
+.agents/
+.env
+.env.*
+
+# 開發暫存檔
+scratch_*
+*.log
+
+# 系統與編輯器檔案
+.DS_Store
+Thumbs.db
+.vscode/
+node_modules/
