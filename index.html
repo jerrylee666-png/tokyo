@@ -115,6 +115,7 @@
     <!-- 分頁 1：行程（手機版預設只看重點，詳細敘述採摺疊展開） -->
     <section id="tab-itinerary" class="tab-page px-4 md:px-6 pt-4 md:pt-5 space-y-4 md:space-y-5" aria-label="行程">
       <div id="daySelector" class="grid grid-cols-3 gap-2 md:grid-cols-6" role="tablist"></div>
+      <p class="md:hidden text-center text-xs font-bold text-slate-400 -mt-1">👆 點擊天數或左右滑動畫面切換第 1–6 天</p>
 
       <div class="flex items-center justify-between gap-2.5 pt-1">
         <h2 id="dayTitle" class="font-black text-lg md:text-2xl text-ink leading-snug"></h2>
@@ -1231,6 +1232,28 @@
     $('jumpTodayBtn').addEventListener('click', () => {
       showTab('tab-itinerary'); state.day = todayDay || 1; state.openMap = {}; renderItinerary(); window.scrollTo({ top: 0 });
     });
+    // 手機左右滑動手勢切換第 1–6 天（循環切換，向右／向左滑皆順暢）
+    let touchStartX = 0, touchStartY = 0;
+    const itSec = $('tab-itinerary');
+    itSec.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    itSec.addEventListener('touchend', (e) => {
+      if (!e.changedTouches.length) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) >= 60 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+        const total = ITINERARY_DATA.length;
+        state.day = dx < 0 ? (state.day % total) + 1 : ((state.day - 2 + total) % total) + 1;
+        state.openMap = {};
+        renderItinerary();
+        window.scrollTo({ top: 0 });
+        const cur = ITINERARY_DATA.find((d) => d.day === state.day);
+        if (cur) toast(`📅 第 ${cur.day} 天（${cur.date.slice(5).replace('-', '/')} 週${cur.weekday}）`);
+      }
+    }, { passive: true });
   }
 
   /* 司機卡（含日語／中文語音發音） */

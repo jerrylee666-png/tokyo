@@ -1,5 +1,5 @@
 // sw.js - Service Worker：離線快取（線上優先更新，離線自動讀取快取）
-const CACHE_NAME = 'tokyo-fuji-pwa-v26';
+const CACHE_NAME = 'tokyo-fuji-pwa-v27';
 const STATIC_ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 const CDN_HOSTS = ['cdn.tailwindcss.com', 'unpkg.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 
