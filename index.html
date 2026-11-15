@@ -114,7 +114,7 @@
 
     <!-- 分頁 1：行程（手機版預設只看重點，詳細敘述採摺疊展開） -->
     <section id="tab-itinerary" class="tab-page px-4 md:px-6 pt-4 md:pt-5 space-y-4 md:space-y-5" aria-label="行程">
-      <div id="daySelector" class="grid grid-cols-3 gap-2 md:grid-cols-6" role="tablist"></div>
+      <div id="daySelector" class="grid grid-cols-6 gap-1 md:gap-2" role="tablist"></div>
       <p class="md:hidden text-center text-xs font-bold text-slate-400 -mt-1">👆 點擊天數，或向右滑看下一天（第 1–6 天）</p>
 
       <div class="flex items-center justify-between gap-2.5 pt-1">
@@ -953,9 +953,9 @@
   function renderDaySelector() {
     $('daySelector').innerHTML = ITINERARY_DATA.map((d) => {
       const on = d.day === state.day;
-      return `<button type="button" role="tab" aria-selected="${on}" data-day="${d.day}" class="dayBtn tap px-2 py-2 md:px-3 md:py-2.5 rounded-2xl border-2 text-center shadow-sm transition-all ${on ? 'bg-vermilion text-white border-vermilion' : 'bg-white text-ink border-line hover:bg-cream'}">
-        <span class="block text-sm md:text-base font-black leading-tight">第 ${d.day} 天${d.day === todayDay ? '★' : ''}</span>
-        <span class="block text-xs md:text-sm font-bold opacity-90 mt-0.5">${d.date.slice(5).replace('-', '/')} (${d.weekday})</span></button>`;
+      return `<button type="button" role="tab" aria-selected="${on}" data-day="${d.day}" class="dayBtn tap px-0.5 py-1.5 md:px-3 md:py-2.5 rounded-xl md:rounded-2xl border-2 text-center shadow-sm transition-all ${on ? 'bg-vermilion text-white border-vermilion' : 'bg-white text-ink border-line hover:bg-cream'}">
+        <span class="block text-xs md:text-base font-black leading-tight whitespace-nowrap">第${d.day}天${d.day === todayDay ? '★' : ''}</span>
+        <span class="block text-[11px] md:text-sm font-bold opacity-90 mt-0.5 whitespace-nowrap">${d.date.slice(5).replace('-', '/')}<span class="hidden md:inline"> (${d.weekday})</span></span></button>`;
     }).join('');
   }
 
