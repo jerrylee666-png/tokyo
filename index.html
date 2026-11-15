@@ -60,7 +60,7 @@
     }
     /* 隱藏 Netlify Drop 等第三方自動注入的浮動徽章（白名單以外的頂層節點一律隱藏） */
     html > *:not(head):not(body),
-    body > *:not(header):not(nav):not(main):not(#hotelFab):not(#driverModal):not(#phraseModal):not(#installModal):not(#toast):not(script):not(style),
+    body > *:not(header):not(nav):not(main):not(#hotelFab):not(#driverModal):not(#phraseModal):not(#toast):not(script):not(style),
     a[href*="netlify" i],
     [id*="netlify" i],
     [class*="netlify" i],
@@ -92,7 +92,7 @@
         <button id="installAppBtn" type="button" class="px-3 py-1.5 rounded-full bg-cream border-2 border-line hover:border-vermilion text-ink text-xs md:text-sm font-extrabold flex items-center gap-1 shadow-sm">📲 安裝 App</button>
       </div>
     </div>
-    <div class="max-w-3xl mx-auto px-4 md:px-6 pb-2.5 md:pb-3">
+    <div class="hidden md:block max-w-3xl mx-auto px-4 md:px-6 pb-2.5 md:pb-3">
       <div class="flex items-center justify-between rounded-2xl bg-cream border-2 border-line text-ink px-3 py-1.5 md:px-4 md:py-2.5 text-sm md:text-lg shadow-sm">
         <span id="countdownText" class="font-extrabold flex items-center gap-1.5 truncate">🎒 計算中…</span>
         <button id="jumpTodayBtn" type="button" class="tap shrink-0 px-3.5 md:px-4 rounded-xl bg-vermilion text-white font-extrabold text-sm md:text-base shadow-sm">看今日</button>
@@ -114,7 +114,7 @@
 
     <!-- 分頁 1：行程（手機版預設只看重點，詳細敘述採摺疊展開） -->
     <section id="tab-itinerary" class="tab-page px-4 md:px-6 pt-4 md:pt-5 space-y-4 md:space-y-5" aria-label="行程">
-      <div id="daySelector" class="flex gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 pb-1 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-6 sm:overflow-visible" role="tablist"></div>
+      <div id="daySelector" class="grid grid-cols-3 gap-2 md:grid-cols-6" role="tablist"></div>
 
       <div class="flex items-center justify-between gap-2.5 pt-1">
         <h2 id="dayTitle" class="font-black text-lg md:text-2xl text-ink leading-snug"></h2>
@@ -347,44 +347,6 @@
     </div>
   </div>
 
-  <!-- 手機 App 安裝引導彈窗（支援 Android 一鍵安裝 ＆ iPhone 加入主畫面教學） -->
-  <div id="installModal" class="fixed inset-0 z-50 hidden bg-ink/40 backdrop-blur-sm overflow-y-auto font-sans flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="安裝手機 App 指南">
-    <div class="max-w-lg w-full paper-card rounded-3xl p-5 md:p-6 space-y-4 my-auto">
-      <div class="flex items-center justify-between gap-2">
-        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-rose-50 border border-rose-200 text-vermilion font-black text-sm md:text-base">📲 安裝成手機桌面 App</span>
-        <button id="installModalClose" type="button" aria-label="關閉" class="w-10 h-10 rounded-full bg-cream border-2 border-line text-xl font-black leading-none">×</button>
-      </div>
-      <div class="flex items-center gap-3.5 rounded-2xl bg-cream/70 border-2 border-line p-3.5">
-        <img src="./icon-192.png" alt="東京富士山 App 圖示" class="w-14 h-14 rounded-2xl border-2 border-white shadow-sm shrink-0">
-        <div class="min-w-0">
-          <p class="font-black text-base md:text-lg text-ink truncate">東京・富士山深度自由行</p>
-          <p class="text-xs md:text-sm font-bold text-slate-600 mt-0.5">✓ 獨立桌面圖示 ・ ✓ 全螢幕無網址列 ・ ✓ 支援飛機/地鐵離線</p>
-        </div>
-      </div>
-      <button id="nativeInstallBtn" type="button" class="hidden tap w-full py-3.5 rounded-2xl bg-vermilion text-white font-black text-base md:text-lg shadow-sm flex items-center justify-center gap-2">📲 立即一鍵安裝到手機桌面</button>
-      <div class="space-y-3 text-sm md:text-base">
-        <div class="rounded-2xl bg-white border-2 border-line p-3.5 space-y-1.5">
-          <p class="font-black text-ink flex items-center gap-1.5">🍎 iPhone / iPad（使用 Safari 開啟）</p>
-          <ol class="list-decimal list-inside space-y-1 text-xs md:text-sm font-bold text-slate-600 leading-relaxed">
-            <li>點擊 Safari 底部正中央的 <b class="text-ink">「分享」圖示（📤 方框向上箭頭）</b>。</li>
-            <li>向下滑動選單，點選 <b class="text-vermilion">「加入主畫面（Add to Home Screen）」</b>。</li>
-            <li>點擊右上角 <b class="text-ink">「新增」</b>，手機桌面即會出現專屬 App 圖示！</li>
-          </ol>
-        </div>
-        <div class="rounded-2xl bg-white border-2 border-line p-3.5 space-y-1.5">
-          <p class="font-black text-ink flex items-center gap-1.5">🤖 Android 手機（使用 Chrome / Edge 開啟）</p>
-          <ol class="list-decimal list-inside space-y-1 text-xs md:text-sm font-bold text-slate-600 leading-relaxed">
-            <li>若有出現上方紅色 <b class="text-vermilion">「立即一鍵安裝」</b> 按鈕，直接點擊即可。</li>
-            <li>或點選瀏覽器右上角 <b class="text-ink">「⋮ 選單」</b> ➔ 點選 <b class="text-vermilion">「安裝應用程式」</b> 或 <b class="text-ink">「加到主畫面」</b>。</li>
-          </ol>
-        </div>
-      </div>
-      <div class="grid grid-cols-2 gap-2.5 pt-1">
-        <button id="copyAppUrlBtn" type="button" class="tap rounded-2xl border-2 border-line bg-cream hover:bg-white font-extrabold text-xs md:text-sm text-ink">📋 複製網址傳給家人</button>
-        <button id="installModalDone" type="button" class="tap rounded-2xl bg-ink text-white font-extrabold text-xs md:text-sm">✓ 我知道了</button>
-      </div>
-    </div>
-  </div>
 
   <div id="toast" class="fixed left-1/2 -translate-x-1/2 z-[60] px-5 py-2.5 rounded-full bg-ink text-white text-sm md:text-base font-extrabold opacity-0 pointer-events-none transition-opacity shadow-lg" style="top:calc(env(safe-area-inset-top,0px) + 14px)" role="status"></div>
 
@@ -692,7 +654,7 @@
             '無障礙動線：回 KOKO HOTEL 領取寄放行李、上洗手間，推著行李箱經晴空塔直通電梯直達「押上站地下月台」，全平路免扛行李。',
             '購票/乘車：刷 Suica / PASMO 直接進站（或於自動售票機買票），前往成田機場方向月台候車。'
           ] },
-        { time: '13:50–14:45 (JST)', title: '押上站 ➔ 成田國際機場 (NRT)', cat: '交通', cost: '約 4,760 JPY / 全家（約 1,190 JPY/人）', transport: '京成 Access 特急（アクセス特急，直達成田第 1 / 第 2 航廈）', hours: '車程約 50 分鐘', q: 'Narita International Airport', ja: '成田国際空港', addr: '千葉県成田市古込1-1', web: 'https://www.keisei.co.jp/',
+        { time: '13:50–14:45 (JST)', title: '押上站 ➔ 成田國際機場（京成 Access 特急）', cat: '交通', cost: '約 4,760 JPY / 全家（約 1,190 JPY/人）', transport: '京成 Access 特急（アクセス特急，直達成田第 1 / 第 2 航廈）', hours: '車程約 50 分鐘', q: 'Narita International Airport', ja: '成田国際空港', addr: '千葉県成田市古込1-1', web: 'https://www.keisei.co.jp/',
           notes: [
             '一線到底免轉車：從押上站搭上「京成 Access 特急」後一路直達成田機場航廈地下月台，免換線、免受高速公路塞車干擾，時間精準穩定！',
             '抵達時間：預計 14:45 抵達，精準卡位班機起飛前 3 小時抵達機場出境大廳！'
@@ -990,9 +952,9 @@
   function renderDaySelector() {
     $('daySelector').innerHTML = ITINERARY_DATA.map((d) => {
       const on = d.day === state.day;
-      return `<button type="button" role="tab" aria-selected="${on}" data-day="${d.day}" class="dayBtn tap shrink-0 px-3.5 py-2 md:px-4 md:py-2.5 rounded-2xl border-2 text-center shadow-sm transition-all ${on ? 'bg-vermilion text-white border-vermilion scale-[1.02]' : 'bg-white text-ink border-line hover:bg-cream'}">
-        <span class="block text-xs md:text-sm font-extrabold opacity-85">DAY ${d.day}${d.day === todayDay ? ' ・今日' : ''}</span>
-        <span class="block text-sm md:text-lg font-black mt-0.5">${d.date.slice(5).replace('-', '/')}（${d.weekday}）</span></button>`;
+      return `<button type="button" role="tab" aria-selected="${on}" data-day="${d.day}" class="dayBtn tap px-2 py-2 md:px-3 md:py-2.5 rounded-2xl border-2 text-center shadow-sm transition-all ${on ? 'bg-vermilion text-white border-vermilion' : 'bg-white text-ink border-line hover:bg-cream'}">
+        <span class="block text-sm md:text-base font-black leading-tight">第 ${d.day} 天${d.day === todayDay ? '★' : ''}</span>
+        <span class="block text-xs md:text-sm font-bold opacity-90 mt-0.5">${d.date.slice(5).replace('-', '/')} (${d.weekday})</span></button>`;
     }).join('');
   }
 
@@ -1015,7 +977,7 @@
     if (it.options && it.options.length) {
       chips.push(`<span class="inline-flex items-center gap-1 text-sm font-bold text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded-full">🍽️ ${it.options.length} 選 1</span>`);
     }
-    return chips.length ? `<div class="flex flex-wrap gap-1.5 mt-2">${chips.join('')}</div>` : '';
+    return chips.length ? `<div class="hidden md:flex flex-wrap gap-1.5 mt-2">${chips.join('')}</div>` : '';
   }
 
   function renderItem(it, di, ii) {
@@ -1038,12 +1000,12 @@
       <div class="paper-card rounded-3xl overflow-hidden">
       <div class="flex items-stretch">
         <button type="button" class="toggleItem flex-1 text-left p-4 md:p-5 min-w-0 hover:bg-cream/30 transition-colors" data-key="${key}" aria-expanded="${open}">
-          <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="font-mono text-sm md:text-base font-extrabold px-2.5 py-0.5 rounded-full bg-ink text-white">${esc(it.time)}</span>
-            <span class="text-xs md:text-sm font-extrabold px-2.5 py-0.5 rounded-full ${cat}">${esc(it.cat)}</span>
-            <span class="foldBadge ml-auto text-xs md:text-sm font-extrabold px-2.5 py-0.5 rounded-full bg-cream border border-line text-vermilion">${open ? '▴ 收合' : '▾ 詳情'}</span>
+          <div class="flex items-center gap-2 flex-nowrap">
+            <span class="font-mono text-sm md:text-base font-black px-2.5 py-0.5 rounded-full bg-ink text-white shrink-0">${esc(it.time)}</span>
+            <span class="hidden md:inline-block text-sm font-extrabold px-2.5 py-0.5 rounded-full ${cat}">${esc(it.cat)}</span>
+            <span class="foldBadge ml-auto text-xs md:text-sm font-extrabold px-2.5 py-0.5 rounded-full bg-cream border border-line text-vermilion shrink-0">${open ? '▴ 收合' : '▾ 詳情'}</span>
           </div>
-          <h3 class="mt-2 font-black text-lg md:text-xl text-ink leading-snug">${esc(it.title)}</h3>
+          <h3 class="mt-2 font-black text-xl md:text-xl text-ink leading-snug">${esc(it.title)}</h3>
           ${it.ja ? `<p class="hidden md:block font-sans font-bold text-base text-slate-500 mt-0.5 truncate">${esc(it.ja)}</p>` : ''}
           ${renderKeyChips(it)}
         </button>
@@ -1139,15 +1101,13 @@
       ? `📅 ${d.date.slice(5).replace('-', '/')} 預報 ${matchedDay.min}°~${matchedDay.max}°C・降雨 ${matchedDay.pop}%`
       : (todayDayFc ? `今日高低溫 ${todayDayFc.min}°~${todayDayFc.max}°C・降雨 ${todayDayFc.pop}%` : '');
     if (barEl) {
-      const pills = spots.map((sp, i) => {
+      const line = spots.map((sp) => {
         const cd = w[sp.key] || w.oshiage;
-        const [ic, txt] = wmoInfo(cd.code);
-        return i === 0
-          ? `<span class="font-black text-base text-ink">${sp.short} ${cd.temp}°C ${ic}<span class="hidden md:inline"> ${txt}</span></span><span class="hidden md:inline text-sm font-bold text-slate-600 bg-cream px-2 py-0.5 rounded-full border border-line">體感 ${cd.feel}°C</span>`
-          : `<span class="text-xs md:text-sm font-bold text-slate-600 bg-cream/60 px-2 py-0.5 rounded-full border border-line">${sp.short} ${cd.temp}°C ${ic}</span>`;
-      }).join('');
-      barEl.innerHTML = `<div class="flex items-center gap-1.5 flex-wrap">${pills}</div>` +
-        `<p id="weatherStatus" class="text-xs md:text-sm font-bold text-slate-500 mt-0.5 truncate">D${d.day} ${fcBadge ? esc(fcBadge) : '即時天氣（' + esc(w.updatedAt) + '）'}</p>`;
+        const [ic] = wmoInfo(cd.code);
+        return `${sp.short} ${cd.temp}°C ${ic}`;
+      }).join(' ｜ ');
+      barEl.innerHTML = `<p class="font-black text-sm md:text-base text-ink leading-snug">${esc(line)}</p>` +
+        `<p id="weatherStatus" class="hidden md:block text-xs md:text-sm font-bold text-slate-500 mt-0.5 truncate">D${d.day} ${fcBadge ? esc(fcBadge) : '即時天氣（' + esc(w.updatedAt) + '）'}</p>`;
     }
     const spotCards = spots.map((sp) => {
       const c = w[sp.key] || w.oshiage;
@@ -1690,53 +1650,39 @@
   let deferredInstallPrompt = null;
   function bindInstallApp() {
     const btn = $('installAppBtn');
-    const modal = $('installModal');
-    const nativeBtn = $('nativeInstallBtn');
+    if (!btn) return;
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-    if (isStandalone && btn) {
-      btn.textContent = '✓ App 模式';
+    if (isStandalone) {
+      btn.classList.add('hidden');
+      return;
     }
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredInstallPrompt = e;
-      if (nativeBtn) nativeBtn.classList.remove('hidden');
     });
     window.addEventListener('appinstalled', () => {
       deferredInstallPrompt = null;
-      if (nativeBtn) nativeBtn.classList.add('hidden');
-      if (btn) btn.textContent = '✓ 已安裝 App';
+      btn.classList.add('hidden');
       toast('已成功安裝至手機主畫面！');
     });
-    const close = () => { modal.classList.add('hidden'); document.body.style.overflow = ''; };
-    if (btn) {
-      btn.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-      });
-    }
-    $('installModalClose').addEventListener('click', close);
-    $('installModalDone').addEventListener('click', close);
-    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
-    if (nativeBtn) {
-      nativeBtn.addEventListener('click', async () => {
-        if (!deferredInstallPrompt) return;
+    btn.addEventListener('click', async () => {
+      if (deferredInstallPrompt) {
         deferredInstallPrompt.prompt();
-        await deferredInstallPrompt.userChoice;
+        const res = await deferredInstallPrompt.userChoice;
         deferredInstallPrompt = null;
-        nativeBtn.classList.add('hidden');
-        close();
-      });
-    }
-    $('copyAppUrlBtn').addEventListener('click', () => {
-      copyText(window.location.href);
-      toast('已複製 App 網址，可貼到 Line 群組給家人！');
+        if (res && res.outcome === 'accepted') btn.classList.add('hidden');
+      } else if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        toast('請點 Safari 底部「分享 📤」➔「加入主畫面」');
+      } else {
+        toast('請點瀏覽器右上角選單 ➔「安裝應用程式」');
+      }
     });
   }
 
   function removeNetlifyBadge() {
     const cleanExtra = () => {
       document.querySelectorAll('html > *:not(head):not(body)').forEach((el) => el.remove());
-      document.querySelectorAll('body > *:not(header):not(nav):not(main):not(#hotelFab):not(#driverModal):not(#phraseModal):not(#installModal):not(#toast):not(script):not(style)').forEach((el) => el.remove());
+      document.querySelectorAll('body > *:not(header):not(nav):not(main):not(#hotelFab):not(#driverModal):not(#phraseModal):not(#toast):not(script):not(style)').forEach((el) => el.remove());
       document.querySelectorAll('a[href*="netlify" i], [id*="netlify" i], [class*="netlify" i], iframe[src*="netlify" i]').forEach((el) => el.remove());
     };
     cleanExtra();
